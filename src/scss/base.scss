@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,700');
+
+.btn{
+
+    font-family: Source Sans Pro;
+}
+
+.btn-active{
+    border-radius: 5px;
+    background-color:#00c4cc;
+    &:hover{
+        background-color: #00d9e1;
+    }
+}
