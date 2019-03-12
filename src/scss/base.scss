@@ -12,3 +12,27 @@
         background-color: #00d9e1;
     }
 }
+
+.registro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction:column;
+    .formulario {
+        display: flex;
+        justify-content: center;
+        flex-direction:column;
+    }
+
+    .label,.input{
+        text-align: left;
+        min-width: 30vw;
+        padding: 5px;
+        margin:5px;
+    }
+    .input{
+        border-radius:3px;
+        border-width: 1px
+    }
+
+}

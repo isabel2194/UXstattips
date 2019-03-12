@@ -1,15 +1,45 @@
 import React, { Component } from "react";
 import "./scss/base.scss";
-import MenuHeader from "./general/components/menu_header";
+import { Route, BrowserRouter } from "react-router-dom";
+import "./scss/menu_header.scss";
+
+import logo from "./img/logo.png";
+
+import Registro from "./home/registro";
+import Login from "./home/login";
+import Home from "./home/home";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <MenuHeader />
-        </header>
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <header className="App-header">
+            <nav className="menu-header">
+              <img src={logo} className="logo" alt="logo" />
+              <ul>
+                <li>
+                  <a href="/js">Comienza</a>
+                </li>
+                <li>
+                  <a href="/documentacion">Documentacion</a>
+                </li>
+                <li className="btn btn-active">
+                  <a href="/registro">Regístrate</a>
+                </li>
+                <li>
+                  <a href="/login">Iniciar sesión</a>
+                </li>
+              </ul>
+            </nav>
+            <Route path="/" component={Home} />
+            {/*<Route path="/js" component={libraryJS} />
+        <Route path="/documentacion" component={Documentacion} />*/}
+            <Route path="/registro" component={Registro} />
+            <Route path="/login" component={Login} />
+          </header>
+        </div>
+      </BrowserRouter>
     );
   }
 }
