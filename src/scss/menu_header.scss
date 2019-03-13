@@ -14,6 +14,8 @@ nav {
     }
     .btn-active a{
         color:white;
+        font-family: Source Sans Pro;
+
         &:hover{
             color:white;
             
@@ -21,11 +23,12 @@ nav {
         
     }
     li{ 
+        padding: 10px 15px;
         a {
-            color: rgba(14,19,24,.45);;
+            color: rgba(14,19,24,.45);
             display: block;
             text-decoration: none;
-            padding: 10px 15px;
+            
             &:hover {
                 color: #00d9e1;
             }

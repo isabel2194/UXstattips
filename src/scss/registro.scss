@@ -1,0 +1,38 @@
+
+
+.registro {
+    margin-top:50px;
+    padding-bottom:60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction:column;
+    background:no-repeat url("../img/ellipse1.png"), no-repeat url("../img/ellipse2.png") 92% 100%;
+    .formulario {
+        display: flex;
+        justify-content: center;
+        flex-direction:column;
+    }
+    
+
+    .label,.input{
+        text-align: left;
+        width: 350px;
+        padding: 5px;
+        margin:9px;
+    }
+
+    .label{
+        margin-bottom:0px;
+    } 
+    .input{
+        border-radius:3px;
+        border: 1px #d6d6d6 solid;
+    }
+    .btn{
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-top:20px;
+    }
+ 
+}

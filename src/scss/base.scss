@@ -1,38 +1,35 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,700');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
 
 .btn{
-
-    font-family: Source Sans Pro;
+    font-family: Montserrat ;
 }
 
 .btn-active{
     border-radius: 5px;
+    border: none;
+    margin:10px 5px;
+    padding: 10px 15px;
     background-color:#00c4cc;
+    color:white;
     &:hover{
         background-color: #00d9e1;
+        color:white;
     }
 }
 
-.registro {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction:column;
-    .formulario {
-        display: flex;
-        justify-content: center;
-        flex-direction:column;
+.formulario{
+    .label{
+        font-family: Montserrat;
+        font-size: 14px;
+        font-weight: 600;
     }
+}
 
-    .label,.input{
-        text-align: left;
-        min-width: 30vw;
-        padding: 5px;
-        margin:5px;
-    }
-    .input{
-        border-radius:3px;
-        border-width: 1px
-    }
-
+.titulo3{
+    font-family: Montserrat;
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 30px;
 }

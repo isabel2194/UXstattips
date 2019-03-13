@@ -32,7 +32,7 @@ class App extends Component {
                 </li>
               </ul>
             </nav>
-            <Route path="/" component={Home} />
+            <Route path="/index" component={Home} />
             {/*<Route path="/js" component={libraryJS} />
         <Route path="/documentacion" component={Documentacion} />*/}
             <Route path="/registro" component={Registro} />
