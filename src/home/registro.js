@@ -15,14 +15,16 @@ class Registro extends Component {
     event.preventDefault();
     console.log(event.target.name.value);
     $.ajax({
-      url: "localhost:3001/clients/",
+      url: "https://uxserverstattips.herokuapp.com/clients/",
       method: "POST",
-      data: {
+      data: JSON.stringify({
         name: event.target.name.value,
         surname: event.target.surname.value,
         email: event.target.email.value,
         password: event.target.passwd.value
-      },
+      }),
+      dataType: "json",
+      contentType: "application/json",
       success: function(data) {
         alert("Usuario registrado");
       }

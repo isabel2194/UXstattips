@@ -8,6 +8,7 @@ import logo from "./img/logo.png";
 import Registro from "./home/registro";
 import Login from "./home/login";
 import Home from "./home/home";
+import Documentacion from "./home/documentacion";
 
 class App extends Component {
   render() {
@@ -32,12 +33,12 @@ class App extends Component {
                 </li>
               </ul>
             </nav>
-            <Route path="/index" component={Home} />
-            {/*<Route path="/js" component={libraryJS} />
-        <Route path="/documentacion" component={Documentacion} />*/}
-            <Route path="/registro" component={Registro} />
-            <Route path="/login" component={Login} />
           </header>
+          <Route path="/index" component={Home} />
+          {/*<Route path="/js" component={libraryJS} />*/}
+          <Route path="/documentacion" component={Documentacion} />
+          <Route path="/registro" component={Registro} />
+          <Route path="/login" component={Login} />
         </div>
       </BrowserRouter>
     );

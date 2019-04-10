@@ -1,0 +1,17 @@
+
+
+.documentacion {
+    display: flex;
+    justify-content: space-around;
+    flex-direction:row;
+    margin-top: 150px;
+    & > div{
+        justify-content: center;
+
+        .cdn-input{
+            padding: 5px;
+            border-radius: 6px;
+            border: #ddd thin solid;
+        }
+    }
+}
