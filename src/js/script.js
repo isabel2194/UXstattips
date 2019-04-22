@@ -12,3 +12,11 @@ function parallaxIt(e, target, movement) {
     y: ((relY - $this.height() / 2) / $this.height()) * movement
   });
 }*/
+
+function copiarTexto(elem) {
+  var $temp = $("<input>");
+  $("body").append($temp);
+  $temp.val($(elem).val()).select(); //Note the use of html() rather than text()
+  document.execCommand("copy");
+  $temp.remove();
+}

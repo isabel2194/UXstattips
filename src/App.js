@@ -5,10 +5,12 @@ import "./scss/menu_header.scss";
 
 import logo from "./img/logo.png";
 
-import Registro from "./home/registro";
-import Login from "./home/login";
-import Home from "./home/home";
-import Documentacion from "./home/documentacion";
+import Registro from "./app/registro";
+import Login from "./app/login";
+import Home from "./app/home";
+import Documentacion from "./app/documentacion";
+import Dashboard from "./app/private/dashboard";
+import withAuth from "./app/private/withAuth";
 
 class App extends Component {
   render() {
@@ -31,14 +33,18 @@ class App extends Component {
                 <li>
                   <a href="/login">Iniciar sesión</a>
                 </li>
+                <li>
+                  <a href="/dashboard">Dashboard</a>
+                </li>
               </ul>
             </nav>
           </header>
           <Route path="/index" component={Home} />
-          {/*<Route path="/js" component={libraryJS} />*/}
-          <Route path="/documentacion" component={Documentacion} />
+          <Route path="/js" component={Documentacion} />
+          {/*<Route path="/documentacion" component={Documentacion} />*/}
           <Route path="/registro" component={Registro} />
           <Route path="/login" component={Login} />
+          <Route path="/dashboard" component={withAuth(Dashboard)} />
         </div>
       </BrowserRouter>
     );

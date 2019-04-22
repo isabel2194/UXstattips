@@ -1,16 +1,20 @@
 import React, { Component } from "react";
 import "../scss/documentacion.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+//import $ from "jquery";
 
 class Documentacion extends Component {
-  copy() {}
-
   render() {
     return (
       <div className="documentacion">
-        <div>
-          <input type="text" val="aqui va el cdn" className="cdn-input" />
-          <button onClick={this.copy}>
+        <div className="box-blue">
+          <input
+            type="text"
+            className="cdn-input"
+            value="http://url_del_js"
+            readOnly
+          />
+          <button>
             <FontAwesomeIcon icon={["far", "copy"]} />
           </button>
         </div>
