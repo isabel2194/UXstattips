@@ -29,7 +29,7 @@ class Login extends Component {
     })
       .then(res => {
         if (res.status === 200) {
-          this.props.history.push("/dashboard");
+          this.props.history.push("/");
         } else {
           const error = new Error(res.error);
           throw error;
