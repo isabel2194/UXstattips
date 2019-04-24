@@ -1,43 +1,59 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import AuthHelperMethods from "./authHelperMethods";
 
-export default function withAuth(ComponentToProtect) {
-  return class extends Component {
-    constructor() {
-      super();
+/* A higher order component is frequently written as a function that returns a class. */
+export default function withAuth(AuthComponent) {
+  const Auth = new AuthHelperMethods();
+  return class AuthWrapped extends Component {
+    constructor(props) {
+      super(props);
       this.state = {
-        loading: true,
-        redirect: false
+        confirm: null,
+        loaded: false
       };
     }
-    componentDidMount() {
-      fetch("https://uxserverstattips.herokuapp.com/clients/checkToken")
-        .then(res => {
-          if (res.status === 200) {
-            this.setState({ loading: false });
-          } else {
-            const error = new Error(res.error);
-            throw error;
-          }
-        })
-        .catch(err => {
-          console.error(err);
-          this.setState({ loading: false, redirect: true });
-        });
+
+    /* In the componentDidmount, we would want to do a couple of important tasks in order to verify the current users authentication status
+    prior to granting them enterance into the app. */
+    componentWillMount() {
+      if (!Auth.loggedIn()) {
+        this.props.history.replace("/login");
+      } else {
+        /* Try to get confirmation message from the Auth helper. */
+        try {
+          const confirm = Auth.getConfirm();
+          console.log("confirmation is:", confirm);
+          this.setState({
+            confirm: confirm,
+            loaded: true
+          });
+        } catch (err) {
+          /* Oh snap! Looks like there's an error so we'll print it out and log the user out for security reasons. */
+          console.log(err);
+          Auth.logout();
+          this.props.history.replace("/login");
+        }
+      }
     }
+
     render() {
-      const { loading, redirect } = this.state;
-      if (loading) {
+      if (this.state.loaded == true) {
+        if (this.state.confirm) {
+          console.log("confirmed!");
+          return (
+            /* component that is currently being wrapper(App.js) */
+            <AuthComponent
+              history={this.props.history}
+              confirm={this.state.confirm}
+            />
+          );
+        } else {
+          console.log("not confirmed!");
+          return null;
+        }
+      } else {
         return null;
       }
-      if (redirect) {
-        return <Redirect to="/login" />;
-      }
-      return (
-        <React.Fragment>
-          <ComponentToProtect {...this.props} />
-        </React.Fragment>
-      );
     }
   };
 }

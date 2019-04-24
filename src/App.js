@@ -11,8 +11,18 @@ import Home from "./app/home";
 import Documentacion from "./app/documentacion";
 import Dashboard from "./app/private/dashboard";
 import withAuth from "./app/private/withAuth";
+import AuthHelperMethods from "./app/private/authHelperMethods";
+import { withRouter } from "react-router-dom";
 
 class App extends Component {
+  Auth = new AuthHelperMethods();
+
+  /* Add the following into _handleLogout*/
+  _handleLogout = () => {
+    this.Auth.logout();
+    this.props.history.replace("/login");
+  };
+
   render() {
     return (
       <BrowserRouter>
@@ -44,7 +54,10 @@ class App extends Component {
           {/*<Route path="/documentacion" component={Documentacion} />*/}
           <Route path="/registro" component={Registro} />
           <Route path="/login" component={Login} />
-          <Route path="/dashboard" component={withAuth(Dashboard)} />
+          <Route
+            path="/dashboard"
+            component={withRouter(withAuth(Dashboard))}
+          />
         </div>
       </BrowserRouter>
     );

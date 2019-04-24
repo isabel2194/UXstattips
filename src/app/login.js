@@ -1,15 +1,11 @@
 import React, { Component } from "react";
-import $ from "jquery";
 import "../scss/login.scss";
+import AuthHelperMethods from "./private/authHelperMethods";
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { email: "", passwd: "" };
+  state = { email: "", passwd: "" };
 
-    this.login = this.login.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
+  Auth = new AuthHelperMethods();
 
   handleInputChange = event => {
     const { value, name } = event.target;
@@ -18,7 +14,29 @@ class Login extends Component {
     });
   };
 
-  onSubmit = event => {
+  componentWillMount() {
+    if (this.Auth.loggedIn()) {
+      this.props.history.replace("/dashboard");
+    }
+  }
+
+  handleFormSubmit = e => {
+    e.preventDefault();
+
+    /* Here is where all the login logic will go. Upon clicking the login button, we would like to utilize a login method that will send our entered credentials over to the server for verification. Once verified, it should store your token and send you to the protected route. */
+    this.Auth.login(this.state.email, this.state.passwd)
+      .then(res => {
+        if (res === false) {
+          return alert("Sorry those credentials don't exist!");
+        }
+        this.props.history.replace("/dashboard");
+      })
+      .catch(err => {
+        alert(err);
+      });
+  };
+
+  /*onSubmit = event => {
     event.preventDefault();
     fetch("https://uxserverstattips.herokuapp.com/clients/login", {
       method: "POST",
@@ -39,25 +57,7 @@ class Login extends Component {
         console.error(err);
         alert("Error logging in please try again");
       });
-  };
-
-  login(event) {
-    event.preventDefault();
-    console.log(event.target.name.value);
-    $.ajax({
-      url: "https://uxserverstattips.herokuapp.com/clients/",
-      method: "GET",
-      data: JSON.stringify({
-        email: event.target.email.value,
-        password: event.target.passwd.value
-      }),
-      dataType: "json",
-      contentType: "application/json",
-      success: function(data) {
-        alert("Usuario logueado");
-      }
-    });
-  }
+  };*/
 
   handleChange(event) {
     this.setState({
@@ -72,7 +72,7 @@ class Login extends Component {
           Inicia sesión
           <br />
         </h3>
-        <form className="formulario" onSubmit={this.onSubmit}>
+        <form className="formulario" onSubmit={this.handleFormSubmit}>
           <label className="label" from="emailCliente">
             Email:
           </label>

@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import $ from "jquery";
 import "../scss/registro.scss";
 
+import AuthHelperMethods from "./private/authHelperMethods";
+
 class Registro extends Component {
+  Auth = new AuthHelperMethods();
+
   constructor(props) {
     super(props);
     this.state = { name: "", surname: "", email: "", passwd: "" };
@@ -27,6 +31,7 @@ class Registro extends Component {
       contentType: "application/json",
       success: function(data) {
         alert("Usuario registrado");
+        this.props.history.replace("/login");
       }
     });
   }
