@@ -29,6 +29,7 @@ class Login extends Component {
         if (res === false) {
           return alert("Sorry those credentials don't exist!");
         }
+        console.log(res);
         this.props.history.replace("/dashboard");
       })
       .catch(err => {
