@@ -9,7 +9,7 @@ class Registro extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { name: "", surname: "", email: "", passwd: "" };
+    this.state = { name: "", surname: "", email: "", passwd: "", website: "" };
 
     this.registrar = this.registrar.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -25,7 +25,8 @@ class Registro extends Component {
         name: event.target.name.value,
         surname: event.target.surname.value,
         email: event.target.email.value,
-        password: event.target.passwd.value
+        password: event.target.passwd.value,
+        website: event.target.website.value
       }),
       dataType: "json",
       contentType: "application/json",
@@ -95,6 +96,18 @@ class Registro extends Component {
             required
             name="passwd"
             value={this.state.password}
+            onChange={this.handleChange}
+          />
+          <label className="label" from="passwordCliente">
+            URL de tu web:
+          </label>
+          <input
+            className="input"
+            id="websiteCliente"
+            type="text"
+            required
+            name="website"
+            value={this.state.website}
             onChange={this.handleChange}
           />
           <button type="submit" className="btn btn-active">
