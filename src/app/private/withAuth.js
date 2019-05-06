@@ -37,7 +37,7 @@ export default function withAuth(AuthComponent) {
     }
 
     render() {
-      if (this.state.loaded == true) {
+      if (this.state.loaded) {
         if (this.state.confirm) {
           console.log("confirmed!");
           return (

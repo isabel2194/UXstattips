@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import "./scss/base.scss";
 import { Route, BrowserRouter } from "react-router-dom";
-import "./scss/menu_header.scss";
 
 import logo from "./img/logo.png";
 
@@ -58,6 +56,9 @@ class App extends Component {
             path="/dashboard"
             component={withRouter(withAuth(Dashboard))}
           />
+          {/*<Route
+            path="/logout"
+          component={withRouter(withAuth(Logout))}/>*/}
         </div>
       </BrowserRouter>
     );

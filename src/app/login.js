@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "../scss/login.scss";
 import AuthHelperMethods from "./private/authHelperMethods";
 
 class Login extends Component {

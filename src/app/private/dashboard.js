@@ -1,5 +1,39 @@
 import React, { Component } from "react";
+import FilterableTable from "react-filterable-table";
+
 import "../../scss/dashboard.scss";
+
+const fields_browser = [
+  {
+    name: "key",
+    displayName: "Navegador",
+    inputFilterable: true,
+    sortable: true
+  },
+  {
+    name: "value",
+    displayName: "Numero de sesiones",
+    inputFilterable: true,
+    exactFilterable: true,
+    sortable: true
+  }
+];
+
+const fields_ssoo = [
+  {
+    name: "key",
+    displayName: "Navegador",
+    inputFilterable: true,
+    sortable: true
+  },
+  {
+    name: "value",
+    displayName: "Numero de sesiones",
+    inputFilterable: true,
+    exactFilterable: true,
+    sortable: true
+  }
+];
 
 class Dashboard extends Component {
   constructor(props) {
@@ -66,28 +100,20 @@ class Dashboard extends Component {
         <div className="browser_ssoo">
           <div className="browser">
             <h3 className="titulo3">Navegadores utilizados</h3>
-            <table className="table">
-              <thead className="thead">
-                <tr>
-                  <th>Navegador</th>
-                  <th>Número de sesiones</th>
-                </tr>
-              </thead>
-              <tbody className="tbody">
-                {this.state.browsers.map(function(item, key) {
-                  return (
-                    <tr key={key}>
-                      <td>{item.key}</td>
-                      <td>{item.value}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <div>
+              <FilterableTable
+                namespace="Browsers"
+                initialSort="key"
+                data={this.state.browsers}
+                fields={fields_browser}
+                noRecordsMessage="No hay datos que mostrar"
+                noFilteredRecordsMessage="No existe ningun dato que mostrar"
+              />
+            </div>
           </div>
           <div className="ssoo">
             <h3 className="titulo3">Sistemas operativos utilizados</h3>
-            <table className="table">
+            {/*<table className="table">
               <thead className="thead">
                 <tr>
                   <th>Sistema operativo</th>
@@ -104,7 +130,17 @@ class Dashboard extends Component {
                   );
                 })}
               </tbody>
-            </table>
+              </table>*/}
+            <div>
+              <FilterableTable
+                namespace="SSOO"
+                initialSort="key"
+                data={this.state.ssoo}
+                fields={fields_ssoo}
+                noRecordsMessage="No hay datos que mostrar"
+                noFilteredRecordsMessage="No existe ningun dato que mostrar"
+              />
+            </div>
           </div>
         </div>
         <div className="ubication">
