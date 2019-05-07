@@ -1,52 +1,111 @@
 import React, { Component } from "react";
 import FilterableTable from "react-filterable-table";
-
 import "../../scss/dashboard.scss";
+import DatatablePage from "../../base_components/DatatablePage";
 
-const fields_browser = [
-  {
-    name: "key",
-    displayName: "Navegador",
-    inputFilterable: true,
-    sortable: true
-  },
-  {
-    name: "value",
-    displayName: "Numero de sesiones",
-    inputFilterable: true,
-    exactFilterable: true,
-    sortable: true
-  }
-];
+const fields_general = {
+  columns: [
+    {
+      label: "Vista",
+      field: "path",
+      sort: "asc",
+      width: 150
+    },
+    {
+      label: "Total de visitas",
+      field: "total_visitas",
+      sort: "asc",
+      width: 150
+    },
+    {
+      label: "Tiempo medio",
+      field: "tiempo_medio",
+      sort: "asc",
+      width: 150
+    },
+    {
+      label: "Media de las acciones registradas",
+      field: "total_acciones",
+      sort: "asc",
+      width: 150
+    }
+  ],
+  rows: []
+};
 
-const fields_ssoo = [
-  {
-    name: "key",
-    displayName: "Navegador",
-    inputFilterable: true,
-    sortable: true
-  },
-  {
-    name: "value",
-    displayName: "Numero de sesiones",
-    inputFilterable: true,
-    exactFilterable: true,
-    sortable: true
-  }
-];
+const fields_browser = {
+  columns: [
+    {
+      label: "Navegador",
+      field: "key",
+      sort: "asc",
+      width: 150
+    },
+    {
+      label: "Numero de sesiones",
+      field: "value",
+      sort: "asc",
+      width: 270
+    }
+  ],
+  rows: []
+};
+
+const fields_ssoo = {
+  columns: [
+    {
+      label: "Sistema operativo",
+      field: "key",
+      sort: "asc",
+      width: 150
+    },
+    {
+      label: "Numero de sesiones",
+      field: "value",
+      sort: "asc",
+      width: 270
+    }
+  ],
+  rows: []
+};
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      general: [],
       browsers: [],
       ssoo: [],
       ubications: []
     };
   }
   componentWillMount() {
+    this.getGeneral();
     this.getBrowsers();
     this.getSsoo();
+  }
+
+  getGeneral() {
+    //const url ="https://uxserverstattips.herokuapp.com/website=" + website + "/browsers";
+    const url =
+      "https://uxserverstattips.herokuapp.com/sessions/datatable1?url=file:///C:/Users/Isabel/Desktop/Master/htdocs/isabel/index.html";
+    return fetch(url)
+      .then(response => response.json())
+      .then(general => {
+        for (let i = 0; i < general.length; i++) {
+          fields_general.rows.push({
+            path: general[i].path,
+            total_visitas: general[i].total_visitas,
+            tiempo_medio: general[i].tiempo_medio,
+            total_acciones: general[i].total_acciones
+          });
+        }
+        return fields_general;
+      })
+      .then(data => {
+        this.setState({ general: data });
+      })
+      .catch(error => console.log(error));
   }
 
   getBrowsers() {
@@ -56,14 +115,13 @@ class Dashboard extends Component {
     return fetch(url)
       .then(response => response.json())
       .then(browsers => {
-        var data = [];
         for (let i = 0; i < browsers.length; i++) {
-          data.push({
+          fields_browser.rows.push({
             key: browsers[i]._id,
             value: browsers[i].count
           });
         }
-        return data;
+        return fields_browser;
       })
       .then(data => {
         this.setState({ browsers: data });
@@ -78,14 +136,13 @@ class Dashboard extends Component {
     return fetch(url)
       .then(response => response.json())
       .then(ssoo => {
-        var data = [];
         for (let i = 0; i < ssoo.length; i++) {
-          data.push({
+          fields_ssoo.rows.push({
             key: ssoo[i]._id,
             value: ssoo[i].count
           });
         }
-        return data;
+        return fields_ssoo;
       })
       .then(data => {
         this.setState({ ssoo: data });
@@ -96,51 +153,17 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="dashboard">
-        <h2>Dashboard</h2>
+        <h2 className="titulo2 box-blue">Dashboard</h2>
+        <DatatablePage data={this.state.general} />
         <div className="browser_ssoo">
           <div className="browser">
             <h3 className="titulo3">Navegadores utilizados</h3>
-            <div>
-              <FilterableTable
-                namespace="Browsers"
-                initialSort="key"
-                data={this.state.browsers}
-                fields={fields_browser}
-                noRecordsMessage="No hay datos que mostrar"
-                noFilteredRecordsMessage="No existe ningun dato que mostrar"
-              />
-            </div>
+            <DatatablePage data={this.state.browsers} />
+            <div />
           </div>
           <div className="ssoo">
             <h3 className="titulo3">Sistemas operativos utilizados</h3>
-            {/*<table className="table">
-              <thead className="thead">
-                <tr>
-                  <th>Sistema operativo</th>
-                  <th>Número de sesiones</th>
-                </tr>
-              </thead>
-              <tbody className="tbody">
-                {this.state.ssoo.map(function(item, key) {
-                  return (
-                    <tr key={key}>
-                      <td>{item.key}</td>
-                      <td>{item.value}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-              </table>*/}
-            <div>
-              <FilterableTable
-                namespace="SSOO"
-                initialSort="key"
-                data={this.state.ssoo}
-                fields={fields_ssoo}
-                noRecordsMessage="No hay datos que mostrar"
-                noFilteredRecordsMessage="No existe ningun dato que mostrar"
-              />
-            </div>
+            <DatatablePage data={this.state.ssoo} />
           </div>
         </div>
         <div className="ubication">

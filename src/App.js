@@ -42,6 +42,11 @@ class App extends Component {
                   <a href="/login">Iniciar sesión</a>
                 </li>
                 <li>
+                  <a onClick={this._handleLogout} href="/logout">
+                    Cerrar sesion
+                  </a>
+                </li>
+                <li>
                   <a href="/dashboard">Dashboard</a>
                 </li>
               </ul>
@@ -56,9 +61,6 @@ class App extends Component {
             path="/dashboard"
             component={withRouter(withAuth(Dashboard))}
           />
-          {/*<Route
-            path="/logout"
-          component={withRouter(withAuth(Logout))}/>*/}
         </div>
       </BrowserRouter>
     );
