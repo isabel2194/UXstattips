@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import FilterableTable from "react-filterable-table";
 import "../../scss/dashboard.scss";
 import DatatablePage from "../../base_components/DatatablePage";
 
@@ -81,14 +80,19 @@ class Dashboard extends Component {
   }
   componentWillMount() {
     this.getGeneral();
-    this.getBrowsers();
-    this.getSsoo();
+    //this.getBrowsers();
+    //this.getSsoo();
   }
 
   getGeneral() {
     //const url ="https://uxserverstattips.herokuapp.com/website=" + website + "/browsers";
+    var oldDate = new Date();
+    oldDate.setDate(oldDate.getDate() - 7);
     const url =
-      "https://uxserverstattips.herokuapp.com/sessions/datatable1?url=file:///C:/Users/Isabel/Desktop/Master/htdocs/isabel/index.html";
+      "http://localhost:3001/general?url=http://localhost/isabel/&inicio=" +
+      oldDate.getTime() +
+      "&fin=" +
+      new Date().getTime();
     return fetch(url)
       .then(response => response.json())
       .then(general => {
@@ -96,8 +100,8 @@ class Dashboard extends Component {
           fields_general.rows.push({
             path: general[i].path,
             total_visitas: general[i].total_visitas,
-            tiempo_medio: general[i].tiempo_medio,
-            total_acciones: general[i].total_acciones
+            tiempo_medio: general[i].tiempo_medio //,
+            //total_acciones: general[i].total_acciones
           });
         }
         return fields_general;
@@ -153,7 +157,7 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="dashboard">
-        <h2 className="titulo2 box-blue">Dashboard</h2>
+        <h2 className="titulo2">Dashboard</h2>
         <DatatablePage data={this.state.general} />
         <div className="browser_ssoo">
           <div className="browser">

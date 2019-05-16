@@ -22,7 +22,9 @@ class Login extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
 
-    /* Here is where all the login logic will go. Upon clicking the login button, we would like to utilize a login method that will send our entered credentials over to the server for verification. Once verified, it should store your token and send you to the protected route. */
+    /* Here is where all the login logic will go. Upon clicking the login button, we would like to utilize a
+     login method that will send our entered credentials over to the server for verification. Once verified,
+     it should store your token and send you to the protected route. */
     this.Auth.login(this.state.email, this.state.passwd)
       .then(res => {
         if (res === false) {
@@ -35,29 +37,6 @@ class Login extends Component {
         alert(err);
       });
   };
-
-  /*onSubmit = event => {
-    event.preventDefault();
-    fetch("https://uxserverstattips.herokuapp.com/clients/login", {
-      method: "POST",
-      body: JSON.stringify(this.state),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(res => {
-        if (res.status === 200) {
-          this.props.history.push("/");
-        } else {
-          const error = new Error(res.error);
-          throw error;
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        alert("Error logging in please try again");
-      });
-  };*/
 
   handleChange(event) {
     this.setState({

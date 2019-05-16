@@ -4,7 +4,12 @@
 }*/
 
 .dashboard{
-    padding:40px;
+    .titulo2{
+        color:white;
+        text-transform: uppercase;
+        background-color:#00c4cc;
+        padding:50px;
+    }
 
     .dataTables_wrapper{
         margin:40px;
