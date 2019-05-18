@@ -3,6 +3,15 @@ import "../../scss/dashboard.scss";
 import DatatablePage from "../../base_components/DatatablePage";
 import AuthHelperMethods from "./authHelperMethods";
 
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip
+} from "recharts";
+
 const fields_general = {
   columns: [
     {
@@ -74,30 +83,68 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      general: [],
+      general: {},
       browsers: [],
       ssoo: [],
-      ubications: []
+      ubications: [],
+      visits_by_day: [],
+      inicio: "",
+      fin: ""
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.filtrarPorFecha = this.filtrarPorFecha.bind(this);
   }
   componentWillMount() {
-    this.getGeneral();
+    this.getVisitsByDay("", "");
+    this.getGeneral("", "");
     //this.getBrowsers();
     //this.getSsoo();
   }
 
-  getGeneral() {
-    var oldDate = new Date();
-    oldDate.setDate(oldDate.getDate() - 7);
+  getVisitsByDay(inicio, fin) {
+    if (isNaN(inicio) || isNaN(fin) || inicio === "" || fin === "") {
+      inicio = new Date();
+      inicio.setDate(inicio.getDate() - 7);
+      inicio = inicio.getTime();
+      fin = new Date().getTime();
+    }
+
+    //const url ="https://uxserverstattips.herokuapp.com/visitsByDay?url=" + Auth.getWebPage() + "&inicio=" + oldDate.getTime() +"&fin=" +new Date().getTime();
+
+    const url =
+      "http://localhost:3001/visitsByDay?url=" +
+      Auth.getWebPage() +
+      "&inicio=" +
+      inicio +
+      "&fin=" +
+      fin;
+    return fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ visits_by_day: data });
+      })
+      .catch(error => console.log(error));
+  }
+
+  getGeneral(inicio, fin) {
+    if (isNaN(inicio) || isNaN(fin) || inicio === "" || fin === "") {
+      inicio = new Date();
+      inicio.setDate(inicio.getDate() - 7);
+      inicio = inicio.getTime();
+      fin = new Date().getTime();
+    }
+
     //const url ="https://uxserverstattips.herokuapp.com/general?url=" + Auth.getWebPage() + "&inicio=" + oldDate.getTime() +"&fin=" +new Date().getTime();
 
     const url =
       "http://localhost:3001/general?url=" +
       Auth.getWebPage() +
       "&inicio=" +
-      oldDate.getTime() +
+      inicio +
       "&fin=" +
-      new Date().getTime();
+      fin;
+    this.setState({ general: {} });
+    fields_general.rows = [];
     return fetch(url)
       .then(response => response.json())
       .then(general => {
@@ -159,11 +206,80 @@ class Dashboard extends Component {
       .catch(error => console.log(error));
   }
 
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  filtrarPorFecha() {
+    var inicio = new Date(this.state.inicio).getTime();
+    var f = new Date(this.state.fin);
+    f.setHours(23, 59, 59);
+    var fin = f.getTime();
+    this.getGeneral(inicio, fin);
+    this.getVisitsByDay(inicio, fin);
+  }
+
   render() {
     return (
       <div className="dashboard">
         <h2 className="titulo2">Dashboard</h2>
-        <DatatablePage data={this.state.general} />
+        <div className="datepicker-group">
+          <div className="form-group datepicker">
+            <label htmlFor="inicio">Desde:</label>
+            <input
+              type="date"
+              name="inicio"
+              id="inicio"
+              className="form-control"
+              value={this.state.inicio}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="form-group datepicker">
+            <label htmlFor="fin">Hasta:</label>
+            <input
+              type="date"
+              name="fin"
+              id="fin"
+              className="form-control"
+              value={this.state.fin}
+              onChange={this.handleChange}
+            />
+          </div>
+          <button className="btn" onClick={this.filtrarPorFecha}>
+            Filtrar por fecha
+          </button>
+        </div>
+        <LineChart
+          width={800}
+          height={300}
+          data={this.state.visits_by_day}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="day" />
+          <YAxis
+            label={{ value: "Visitas", angle: -90, position: "insideLeft" }}
+            allowDecimals={false}
+          />
+          <Tooltip />
+          <Line
+            name="Visitas"
+            type="monotone"
+            dataKey="value"
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />
+        </LineChart>
+
+        <DatatablePage data={this.state.general} update={this.state.update} />
         {/*<div className="browser_ssoo">
           <div className="browser">
             <h3 className="titulo3">Navegadores utilizados</h3>
@@ -174,10 +290,7 @@ class Dashboard extends Component {
             <h3 className="titulo3">Sistemas operativos utilizados</h3>
             <DatatablePage data={this.state.ssoo} />
           </div>
-        </div>
-        <div className="ubication">
-          <h3 className="titulo3">Ubicación de los usuarios</h3>
-    </div>*/}
+        </div>*/}
       </div>
     );
   }
