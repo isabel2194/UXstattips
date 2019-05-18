@@ -13,5 +13,12 @@
 
     .dataTables_wrapper{
         margin:40px;
+        .pagination,.dataTables_filter{
+            float: right;
+        }
+        table{
+            margin: 20px 0;
+        }
     }
+   
 }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../../scss/dashboard.scss";
 import DatatablePage from "../../base_components/DatatablePage";
+import AuthHelperMethods from "./authHelperMethods";
 
 const fields_general = {
   columns: [
@@ -69,6 +70,8 @@ const fields_ssoo = {
 };
 
 class Dashboard extends Component {
+  Auth = new AuthHelperMethods();
+
   constructor(props) {
     super(props);
     this.state = {
@@ -159,7 +162,7 @@ class Dashboard extends Component {
       <div className="dashboard">
         <h2 className="titulo2">Dashboard</h2>
         <DatatablePage data={this.state.general} />
-        <div className="browser_ssoo">
+        {/*<div className="browser_ssoo">
           <div className="browser">
             <h3 className="titulo3">Navegadores utilizados</h3>
             <DatatablePage data={this.state.browsers} />
@@ -172,7 +175,7 @@ class Dashboard extends Component {
         </div>
         <div className="ubication">
           <h3 className="titulo3">Ubicación de los usuarios</h3>
-        </div>
+    </div>*/}
       </div>
     );
   }

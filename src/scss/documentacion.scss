@@ -4,9 +4,12 @@
     display: flex;
     justify-content: space-around;
     flex-direction:row;
-    margin-top: 150px;
+    padding-top: 150px;
+    background:no-repeat url("../img/ellipse1.png") 19% 8%, no-repeat url("../img/ellipse2.png") 92% 100%;
+    height: 70vh;
     & > div{
         justify-content: center;
+        max-height: 133px;
 
         .cdn-input{
             width: 250px;
@@ -15,6 +18,9 @@
             border-bottom-left-radius: 6px;
             border: #ddd thin solid;
             border-right: none;
+            font-family: Montserrat;
+            font-size: 13px;
+            height: 32px;
         }
         button{
             background-color:white;

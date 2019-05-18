@@ -20,7 +20,8 @@ class Documentacion extends Component {
         </div>
         <div>
           <h2 className="titulo2">
-            Inserta la librería en tu web <br />y comienza a mejorarla!
+            Inserta la librería en tu web <br />y comienza a ver tus
+            estadísticas!
           </h2>
         </div>
       </div>

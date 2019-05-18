@@ -23,13 +23,14 @@ nav {
     }
     li{ 
         padding: 10px 15px;
+        color: rgba(14,19,24,.45);
         a {
             color: rgba(14,19,24,.45);
             display: block;
-            text-decoration: none;
-            
+            text-decoration: none;            
             &:hover {
                 color: #00d9e1;
+                text-decoration: none; 
             }
         }
     }
