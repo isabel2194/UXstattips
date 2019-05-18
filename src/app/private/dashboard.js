@@ -25,7 +25,7 @@ const fields_general = {
     },
     {
       label: "Media de las acciones registradas",
-      field: "total_acciones",
+      field: "acciones_medias",
       sort: "asc",
       width: 150
     }
@@ -68,10 +68,9 @@ const fields_ssoo = {
   ],
   rows: []
 };
+const Auth = new AuthHelperMethods();
 
 class Dashboard extends Component {
-  Auth = new AuthHelperMethods();
-
   constructor(props) {
     super(props);
     this.state = {
@@ -88,11 +87,14 @@ class Dashboard extends Component {
   }
 
   getGeneral() {
-    //const url ="https://uxserverstattips.herokuapp.com/website=" + website + "/browsers";
     var oldDate = new Date();
     oldDate.setDate(oldDate.getDate() - 7);
+    //const url ="https://uxserverstattips.herokuapp.com/general?url=" + Auth.getWebPage() + "&inicio=" + oldDate.getTime() +"&fin=" +new Date().getTime();
+
     const url =
-      "http://localhost:3001/general?url=http://localhost/isabel/&inicio=" +
+      "http://localhost:3001/general?url=" +
+      Auth.getWebPage() +
+      "&inicio=" +
       oldDate.getTime() +
       "&fin=" +
       new Date().getTime();
@@ -103,8 +105,8 @@ class Dashboard extends Component {
           fields_general.rows.push({
             path: general[i].path,
             total_visitas: general[i].total_visitas,
-            tiempo_medio: general[i].tiempo_medio //,
-            //total_acciones: general[i].total_acciones
+            tiempo_medio: general[i].tiempo_medio,
+            acciones_medias: general[i].acciones_medias
           });
         }
         return fields_general;
@@ -116,9 +118,9 @@ class Dashboard extends Component {
   }
 
   getBrowsers() {
-    //const url ="https://uxserverstattips.herokuapp.com/website=" + website + "/browsers";
     const url =
-      "https://uxserverstattips.herokuapp.com/websites/browsers?website=file:///C:/Users/Isabel/Desktop/Master/htdocs/isabel/index.html";
+      "https://uxserverstattips.herokuapp.com/websites/browsers?website=" +
+      Auth.getWebPage();
     return fetch(url)
       .then(response => response.json())
       .then(browsers => {
@@ -137,9 +139,9 @@ class Dashboard extends Component {
   }
 
   getSsoo() {
-    //const url ="https://uxserverstattips.herokuapp.com/website=" + website + "/browsers";
     const url =
-      "https://uxserverstattips.herokuapp.com/websites/ssoo?website=file:///C:/Users/Isabel/Desktop/Master/htdocs/isabel/index.html";
+      "https://uxserverstattips.herokuapp.com/websites/ssoo?website=" +
+      Auth.getWebPage();
     return fetch(url)
       .then(response => response.json())
       .then(ssoo => {

@@ -17,6 +17,7 @@ export default class AuthHelperMethods {
     }).then(res => {
       this.setToken(res.token); // Setting the token in localStorage
       this.setUserEmail(email);
+      this.setWebPage(res.website);
       return Promise.resolve(res);
     });
   };
@@ -58,10 +59,19 @@ export default class AuthHelperMethods {
     return localStorage.getItem("user_email");
   };
 
+  setWebPage = email => {
+    localStorage.setItem("website", email);
+  };
+
+  getWebPage = () => {
+    return localStorage.getItem("website");
+  };
+
   logout = () => {
     // Clear user token and profile data from localStorage
     localStorage.removeItem("id_token");
     localStorage.removeItem("user_email");
+    localStorage.removeItem("website");
   };
 
   getConfirm = () => {
