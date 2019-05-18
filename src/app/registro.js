@@ -19,7 +19,8 @@ class Registro extends Component {
     event.preventDefault();
     console.log(event.target.name.value);
     $.ajax({
-      url: "http://localhost:3001/client",
+      //url: "http://localhost:3001/client",
+      url: "https://uxserverstattips.herokuapp.com/client",
       method: "POST",
       data: JSON.stringify({
         name: event.target.name.value,

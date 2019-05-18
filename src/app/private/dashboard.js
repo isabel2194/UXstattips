@@ -111,8 +111,16 @@ class Dashboard extends Component {
 
     //const url ="https://uxserverstattips.herokuapp.com/visitsByDay?url=" + Auth.getWebPage() + "&inicio=" + oldDate.getTime() +"&fin=" +new Date().getTime();
 
-    const url =
+    /*const url =
       "http://localhost:3001/visitsByDay?url=" +
+      Auth.getWebPage() +
+      "&inicio=" +
+      inicio +
+      "&fin=" +
+      fin;*/
+
+    const url =
+      "https://uxserverstattips.herokuapp.com/visitsByDay?url=" +
       Auth.getWebPage() +
       "&inicio=" +
       inicio +
@@ -136,8 +144,16 @@ class Dashboard extends Component {
 
     //const url ="https://uxserverstattips.herokuapp.com/general?url=" + Auth.getWebPage() + "&inicio=" + oldDate.getTime() +"&fin=" +new Date().getTime();
 
-    const url =
+    /*const url =
       "http://localhost:3001/general?url=" +
+      Auth.getWebPage() +
+      "&inicio=" +
+      inicio +
+      "&fin=" +
+      fin;*/
+
+    const url =
+      "https://uxserverstattips.herokuapp.com/general?url=" +
       Auth.getWebPage() +
       "&inicio=" +
       inicio +
