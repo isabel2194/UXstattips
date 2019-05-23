@@ -8,6 +8,7 @@ import Dashboard from "./app/private/dashboard";
 import withAuth from "./app/private/withAuth";
 import { withRouter, Redirect } from "react-router-dom";
 import MenuHeader from "./app/menuHeader";
+import Detalles from "./app/private/detalles";
 
 class App extends Component {
   render() {
@@ -25,6 +26,7 @@ class App extends Component {
             path="/dashboard"
             component={withRouter(withAuth(Dashboard))}
           />
+          <Route path="/vista" component={withRouter(Detalles)} />
         </div>
       </BrowserRouter>
     );

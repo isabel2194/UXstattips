@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import "../../scss/dashboard.scss";
-import DatatablePage from "../../base_components/DatatablePage";
+import "../../scss/detalles.scss";
+import NormalTable from "../../base_components/NormalTable";
 import AuthHelperMethods from "./authHelperMethods";
-import { MDBBtn } from "mdbreact";
-import { Link } from "react-router-dom";
+import queryString from "query-string";
 
 import {
   LineChart,
@@ -13,36 +12,25 @@ import {
   CartesianGrid,
   Tooltip
 } from "recharts";
+import DatatablePage from "../../base_components/DatatablePage";
 
 const fields_general = {
   columns: [
     {
-      label: "Vista",
-      field: "path",
+      label: "Usuarios totales",
+      field: "total_users",
       sort: "asc",
       width: 150
     },
     {
-      label: "Total de visitas",
-      field: "total_visitas",
+      label: "Tiempo medio de sesion (seg.)",
+      field: "time_session",
       sort: "asc",
       width: 150
     },
     {
-      label: "Tiempo medio",
-      field: "tiempo_medio",
-      sort: "asc",
-      width: 150
-    },
-    {
-      label: "Media de las acciones registradas",
-      field: "acciones_medias",
-      sort: "asc",
-      width: 150
-    },
-    {
-      label: "...",
-      field: "details",
+      label: "Media de acciones realizadas",
+      field: "average_actions",
       sort: "asc",
       width: 150
     }
@@ -50,74 +38,78 @@ const fields_general = {
   rows: []
 };
 
-const fields_browser = {
+const fields_details = {
   columns: [
     {
-      label: "Navegador",
-      field: "key",
+      label: "Usuario (IP)",
+      field: "user",
       sort: "asc",
       width: 150
     },
     {
-      label: "Numero de sesiones",
-      field: "value",
+      label: "Acciones totales",
+      field: "total_actions",
       sort: "asc",
-      width: 270
+      width: 150
+    },
+    {
+      label: "Acciones de tipo 1",
+      field: "type_one_actions",
+      sort: "asc",
+      width: 150
+    },
+    {
+      label: "Tiempo",
+      field: "time",
+      sort: "asc",
+      width: 150
+    },
+    {
+      label: "Navegadores utilizados",
+      field: "browsers",
+      sort: "asc",
+      width: 150
+    },
+    {
+      label: "Sistemas operativos utilizados",
+      field: "ssoos",
+      sort: "asc",
+      width: 150
     }
   ],
   rows: []
 };
 
-const fields_ssoo = {
-  columns: [
-    {
-      label: "Sistema operativo",
-      field: "key",
-      sort: "asc",
-      width: 150
-    },
-    {
-      label: "Numero de sesiones",
-      field: "value",
-      sort: "asc",
-      width: 270
-    }
-  ],
-  rows: []
-};
 const Auth = new AuthHelperMethods();
 
-class Dashboard extends Component {
+class Detalles extends Component {
   constructor(props) {
     super(props);
+    const values = queryString.parse(this.props.location.search);
+
     this.state = {
       general: {},
-      browsers: [],
-      ssoo: [],
-      ubications: [],
+      details: {},
       visits_by_day: [],
       inicio: "",
-      fin: ""
+      fin: "",
+      path: values.path
     };
     this.handleChange = this.handleChange.bind(this);
     this.filtrarPorFecha = this.filtrarPorFecha.bind(this);
   }
-  componentWillMount() {
-    this.getVisitsByDay("", "");
-    this.getGeneral("", "");
-    //this.getBrowsers();
-    //this.getSsoo();
+  componentDidMount() {
+    this.getGeneralView("", "", this.state.path);
+    this.getDetailsView("", "", this.state.path);
   }
 
-  getVisitsByDay(inicio, fin) {
+  getLineGeneralView(inicio, fin, path) {
     if (isNaN(inicio) || isNaN(fin) || inicio === "" || fin === "") {
       inicio = new Date();
       inicio.setDate(inicio.getDate() - 7);
       inicio = inicio.getTime();
       fin = new Date().getTime();
     }
-
-    //const url ="https://uxserverstattips.herokuapp.com/visitsByDay?url=" + Auth.getWebPage() + "&inicio=" + oldDate.getTime() +"&fin=" +new Date().getTime();
 
     /*const url =
       "http://localhost:3001/visitsByDay?url=" +
@@ -128,8 +120,10 @@ class Dashboard extends Component {
       fin;*/
 
     const url =
-      "https://uxserverstattips.herokuapp.com/visitsByDay?url=" +
+      "https://uxserverstattips.herokuapp.com/generalViewData?url=" +
       Auth.getWebPage() +
+      "&path=" +
+      path +
       "&inicio=" +
       inicio +
       "&fin=" +
@@ -142,7 +136,7 @@ class Dashboard extends Component {
       .catch(error => console.log(error));
   }
 
-  getGeneral(inicio, fin) {
+  getGeneralView(inicio, fin, path) {
     if (isNaN(inicio) || isNaN(fin) || inicio === "" || fin === "") {
       inicio = new Date();
       inicio.setDate(inicio.getDate() - 7);
@@ -150,23 +144,25 @@ class Dashboard extends Component {
       fin = new Date().getTime();
     }
 
-    //const url ="https://uxserverstattips.herokuapp.com/general?url=" + Auth.getWebPage() + "&inicio=" + oldDate.getTime() +"&fin=" +new Date().getTime();
-
-    /*const url =
-      "http://localhost:3001/general?url=" +
-      Auth.getWebPage() +
-      "&inicio=" +
-      inicio +
-      "&fin=" +
-      fin;*/
-
     const url =
-      "https://uxserverstattips.herokuapp.com/general?url=" +
+      "http://localhost:3001/generalView?url=" +
       Auth.getWebPage() +
+      "&path=" +
+      path +
       "&inicio=" +
       inicio +
       "&fin=" +
       fin;
+
+    /*const url =
+      "https://uxserverstattips.herokuapp.com/generalView?url=" +
+      Auth.getWebPage() +
+      "&path=" +
+      path +
+      "&inicio=" +
+      inicio +
+      "&fin=" +
+      fin;*/
     this.setState({ general: {} });
     fields_general.rows = [];
     return fetch(url)
@@ -174,13 +170,9 @@ class Dashboard extends Component {
       .then(general => {
         for (let i = 0; i < general.length; i++) {
           fields_general.rows.push({
-            path: general[i].path,
-            total_visitas: general[i].total_visitas,
-            tiempo_medio: general[i].tiempo_medio,
-            acciones_medias: general[i].acciones_medias,
-            details_button: (
-              <Link to={`/vista?path=${general[i].path}`}>Detalles</Link>
-            )
+            total_users: general[i].total_users,
+            time_session: general[i].time_session,
+            average_actions: general[i].average_actions
           });
         }
         return fields_general;
@@ -191,44 +183,52 @@ class Dashboard extends Component {
       .catch(error => console.log(error));
   }
 
-  getBrowsers() {
-    const url =
-      "https://uxserverstattips.herokuapp.com/websites/browsers?website=" +
-      Auth.getWebPage();
-    return fetch(url)
-      .then(response => response.json())
-      .then(browsers => {
-        for (let i = 0; i < browsers.length; i++) {
-          fields_browser.rows.push({
-            key: browsers[i]._id,
-            value: browsers[i].count
-          });
-        }
-        return fields_browser;
-      })
-      .then(data => {
-        this.setState({ browsers: data });
-      })
-      .catch(error => console.log(error));
-  }
+  getDetailsView(inicio, fin, path) {
+    if (isNaN(inicio) || isNaN(fin) || inicio === "" || fin === "") {
+      inicio = new Date();
+      inicio.setDate(inicio.getDate() - 7);
+      inicio = inicio.getTime();
+      fin = new Date().getTime();
+    }
 
-  getSsoo() {
     const url =
-      "https://uxserverstattips.herokuapp.com/websites/ssoo?website=" +
-      Auth.getWebPage();
+      "http://localhost:3001/detailView?url=" +
+      Auth.getWebPage() +
+      "&path=" +
+      path +
+      "&inicio=" +
+      inicio +
+      "&fin=" +
+      fin;
+
+    /*const url =
+      "https://uxserverstattips.herokuapp.com/detailView?url=" +
+      Auth.getWebPage() +
+      "&path=" +
+      path +
+      "&inicio=" +
+      inicio +
+      "&fin=" +
+      fin;*/
+    this.setState({ details: {} });
+    fields_details.rows = [];
     return fetch(url)
       .then(response => response.json())
-      .then(ssoo => {
-        for (let i = 0; i < ssoo.length; i++) {
-          fields_ssoo.rows.push({
-            key: ssoo[i]._id,
-            value: ssoo[i].count
+      .then(details => {
+        for (let i = 0; i < details.length; i++) {
+          fields_details.rows.push({
+            user: details[i].user,
+            total_actions: details[i].total_actions,
+            type_one_actions: details[i].type_one_actions,
+            time: details[i].time,
+            browsers: details[i].browsers,
+            ssoos: details[i].ssoos
           });
         }
-        return fields_ssoo;
+        return fields_details;
       })
       .then(data => {
-        this.setState({ ssoo: data });
+        this.setState({ details: data });
       })
       .catch(error => console.log(error));
   }
@@ -244,14 +244,15 @@ class Dashboard extends Component {
     var f = new Date(this.state.fin);
     f.setHours(23, 59, 59);
     var fin = f.getTime();
-    this.getGeneral(inicio, fin);
-    this.getVisitsByDay(inicio, fin);
+    this.getDetailsView(inicio, fin, this.state.path);
+    this.getGeneralView(inicio, fin, this.state.path);
+    //this.getVisitsByDay(inicio, fin);
   }
 
   render() {
     return (
-      <div className="dashboard">
-        <h2 className="titulo2">Dashboard</h2>
+      <div className="detalles">
+        <h2 className="titulo2">Detalles de la vista {this.state.path} </h2>
         <div className="datepicker-group">
           <div className="form-group datepicker">
             <label htmlFor="inicio">Desde:</label>
@@ -279,7 +280,7 @@ class Dashboard extends Component {
             Filtrar por fecha
           </button>
         </div>
-        <LineChart
+        {/*<LineChart
           width={800}
           height={300}
           data={this.state.visits_by_day}
@@ -304,23 +305,16 @@ class Dashboard extends Component {
             stroke="#8884d8"
             activeDot={{ r: 8 }}
           />
-        </LineChart>
+        </LineChart>*/}
 
-        <DatatablePage data={this.state.general} update={this.state.update} />
-        {/*<div className="browser_ssoo">
-          <div className="browser">
-            <h3 className="titulo3">Navegadores utilizados</h3>
-            <DatatablePage data={this.state.browsers} />
-            <div />
-          </div>
-          <div className="ssoo">
-            <h3 className="titulo3">Sistemas operativos utilizados</h3>
-            <DatatablePage data={this.state.ssoo} />
-          </div>
-        </div>*/}
+        <NormalTable data={this.state.general} update={this.state.update} />
+        <div className="box-gray">
+          <h3 className="titulo3">Resumen de usuarios</h3>
+          <DatatablePage data={this.state.details} update={this.state.update} />
+        </div>
       </div>
     );
   }
 }
 
-export default Dashboard;
+export default Detalles;
