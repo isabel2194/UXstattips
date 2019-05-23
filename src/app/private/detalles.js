@@ -144,7 +144,7 @@ class Detalles extends Component {
       fin = new Date().getTime();
     }
 
-    const url =
+    /*const url =
       "http://localhost:3001/generalView?url=" +
       Auth.getWebPage() +
       "&path=" +
@@ -152,9 +152,9 @@ class Detalles extends Component {
       "&inicio=" +
       inicio +
       "&fin=" +
-      fin;
+      fin;*/
 
-    /*const url =
+    const url =
       "https://uxserverstattips.herokuapp.com/generalView?url=" +
       Auth.getWebPage() +
       "&path=" +
@@ -162,7 +162,7 @@ class Detalles extends Component {
       "&inicio=" +
       inicio +
       "&fin=" +
-      fin;*/
+      fin;
     this.setState({ general: {} });
     fields_general.rows = [];
     return fetch(url)
@@ -191,7 +191,7 @@ class Detalles extends Component {
       fin = new Date().getTime();
     }
 
-    const url =
+    /*const url =
       "http://localhost:3001/detailView?url=" +
       Auth.getWebPage() +
       "&path=" +
@@ -199,9 +199,9 @@ class Detalles extends Component {
       "&inicio=" +
       inicio +
       "&fin=" +
-      fin;
+      fin;*/
 
-    /*const url =
+    const url =
       "https://uxserverstattips.herokuapp.com/detailView?url=" +
       Auth.getWebPage() +
       "&path=" +
@@ -209,7 +209,7 @@ class Detalles extends Component {
       "&inicio=" +
       inicio +
       "&fin=" +
-      fin;*/
+      fin;
     this.setState({ details: {} });
     fields_details.rows = [];
     return fetch(url)
