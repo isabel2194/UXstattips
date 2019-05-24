@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "../../scss/dashboard.scss";
 import DatatablePage from "../../base_components/DatatablePage";
 import AuthHelperMethods from "./authHelperMethods";
-import { MDBBtn } from "mdbreact";
 import { Link } from "react-router-dom";
 
 import {
@@ -29,14 +28,26 @@ const fields_general = {
       width: 150
     },
     {
-      label: "Tiempo medio",
+      label: "Tiempo medio (seg.)",
       field: "tiempo_medio",
+      sort: "asc",
+      width: 150
+    },
+    {
+      label: "Tiempo total (seg.)",
+      field: "tiempo_total",
       sort: "asc",
       width: 150
     },
     {
       label: "Media de las acciones registradas",
       field: "acciones_medias",
+      sort: "asc",
+      width: 150
+    },
+    {
+      label: "Total de acciones registradas",
+      field: "acciones_totales",
       sort: "asc",
       width: 150
     },
@@ -50,41 +61,6 @@ const fields_general = {
   rows: []
 };
 
-const fields_browser = {
-  columns: [
-    {
-      label: "Navegador",
-      field: "key",
-      sort: "asc",
-      width: 150
-    },
-    {
-      label: "Numero de sesiones",
-      field: "value",
-      sort: "asc",
-      width: 270
-    }
-  ],
-  rows: []
-};
-
-const fields_ssoo = {
-  columns: [
-    {
-      label: "Sistema operativo",
-      field: "key",
-      sort: "asc",
-      width: 150
-    },
-    {
-      label: "Numero de sesiones",
-      field: "value",
-      sort: "asc",
-      width: 270
-    }
-  ],
-  rows: []
-};
 const Auth = new AuthHelperMethods();
 
 class Dashboard extends Component {
@@ -101,6 +77,7 @@ class Dashboard extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.filtrarPorFecha = this.filtrarPorFecha.bind(this);
+    this.filtrarPorDias = this.filtrarPorDias.bind(this);
   }
   componentWillMount() {
     this.getVisitsByDay("", "");
@@ -116,6 +93,7 @@ class Dashboard extends Component {
       inicio = inicio.getTime();
       fin = new Date().getTime();
     }
+    this.setInputDates(inicio, fin);
 
     //const url ="https://uxserverstattips.herokuapp.com/visitsByDay?url=" + Auth.getWebPage() + "&inicio=" + oldDate.getTime() +"&fin=" +new Date().getTime();
 
@@ -177,7 +155,9 @@ class Dashboard extends Component {
             path: general[i].path,
             total_visitas: general[i].total_visitas,
             tiempo_medio: general[i].tiempo_medio,
+            tiempo_total: general[i].tiempo_total,
             acciones_medias: general[i].acciones_medias,
+            acciones_totales: general[i].acciones_totales,
             details_button: (
               <Link to={`/vista?path=${general[i].path}`}>Detalles</Link>
             )
@@ -187,48 +167,6 @@ class Dashboard extends Component {
       })
       .then(data => {
         this.setState({ general: data });
-      })
-      .catch(error => console.log(error));
-  }
-
-  getBrowsers() {
-    const url =
-      "https://uxserverstattips.herokuapp.com/websites/browsers?website=" +
-      Auth.getWebPage();
-    return fetch(url)
-      .then(response => response.json())
-      .then(browsers => {
-        for (let i = 0; i < browsers.length; i++) {
-          fields_browser.rows.push({
-            key: browsers[i]._id,
-            value: browsers[i].count
-          });
-        }
-        return fields_browser;
-      })
-      .then(data => {
-        this.setState({ browsers: data });
-      })
-      .catch(error => console.log(error));
-  }
-
-  getSsoo() {
-    const url =
-      "https://uxserverstattips.herokuapp.com/websites/ssoo?website=" +
-      Auth.getWebPage();
-    return fetch(url)
-      .then(response => response.json())
-      .then(ssoo => {
-        for (let i = 0; i < ssoo.length; i++) {
-          fields_ssoo.rows.push({
-            key: ssoo[i]._id,
-            value: ssoo[i].count
-          });
-        }
-        return fields_ssoo;
-      })
-      .then(data => {
-        this.setState({ ssoo: data });
       })
       .catch(error => console.log(error));
   }
@@ -246,6 +184,36 @@ class Dashboard extends Component {
     var fin = f.getTime();
     this.getGeneral(inicio, fin);
     this.getVisitsByDay(inicio, fin);
+  }
+
+  filtrarPorDias(dias) {
+    var inicio = new Date();
+    inicio.setDate(inicio.getDate() - dias);
+    inicio = inicio.getTime();
+    var fin = new Date().getTime();
+
+    this.getGeneral(inicio, fin);
+    this.getVisitsByDay(inicio, fin);
+  }
+
+  setInputDates(inicio, fin) {
+    var date = new Date(inicio);
+    var day = date.getDate();
+    var month = date.getMonth();
+    var year = date.getFullYear();
+    this.setState({
+      inicio:
+        year + "-" + ("0" + (month + 1)).slice(-2) + "-" + ("0" + day).slice(-2)
+    });
+
+    date = new Date(fin);
+    day = date.getDate();
+    month = date.getMonth();
+    year = date.getFullYear();
+    this.setState({
+      fin:
+        year + "-" + ("0" + (month + 1)).slice(-2) + "-" + ("0" + day).slice(-2)
+    });
   }
 
   render() {
@@ -278,6 +246,27 @@ class Dashboard extends Component {
           <button className="btn" onClick={this.filtrarPorFecha}>
             Filtrar por fecha
           </button>
+          <div className="pull-right fast-options">
+            <label>Últimos:</label>
+            <button
+              className="btn btn-link"
+              onClick={this.filtrarPorDias.bind(this, 7)}
+            >
+              7 días
+            </button>
+            <button
+              className="btn btn-link"
+              onClick={this.filtrarPorDias.bind(this, 15)}
+            >
+              15 días
+            </button>
+            <button
+              className="btn btn-link"
+              onClick={this.filtrarPorDias.bind(this, 30)}
+            >
+              30 días
+            </button>
+          </div>
         </div>
         <LineChart
           width={800}
@@ -307,17 +296,6 @@ class Dashboard extends Component {
         </LineChart>
 
         <DatatablePage data={this.state.general} update={this.state.update} />
-        {/*<div className="browser_ssoo">
-          <div className="browser">
-            <h3 className="titulo3">Navegadores utilizados</h3>
-            <DatatablePage data={this.state.browsers} />
-            <div />
-          </div>
-          <div className="ssoo">
-            <h3 className="titulo3">Sistemas operativos utilizados</h3>
-            <DatatablePage data={this.state.ssoo} />
-          </div>
-        </div>*/}
       </div>
     );
   }

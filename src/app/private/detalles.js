@@ -4,14 +4,14 @@ import NormalTable from "../../base_components/NormalTable";
 import AuthHelperMethods from "./authHelperMethods";
 import queryString from "query-string";
 
-import {
+/*import {
   LineChart,
   Line,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip
-} from "recharts";
+} from "recharts";*/
 import DatatablePage from "../../base_components/DatatablePage";
 
 const fields_general = {
@@ -97,6 +97,7 @@ class Detalles extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.filtrarPorFecha = this.filtrarPorFecha.bind(this);
+    this.setInputDates = this.setInputDates.bind(this);
   }
   componentDidMount() {
     this.getGeneralView("", "", this.state.path);
@@ -187,9 +188,11 @@ class Detalles extends Component {
     if (isNaN(inicio) || isNaN(fin) || inicio === "" || fin === "") {
       inicio = new Date();
       inicio.setDate(inicio.getDate() - 7);
+
       inicio = inicio.getTime();
       fin = new Date().getTime();
     }
+    this.setInputDates(inicio, fin);
 
     /*const url =
       "http://localhost:3001/detailView?url=" +
@@ -249,6 +252,37 @@ class Detalles extends Component {
     //this.getVisitsByDay(inicio, fin);
   }
 
+  filtrarPorDias(dias) {
+    var inicio = new Date();
+    inicio.setDate(inicio.getDate() - dias);
+    inicio = inicio.getTime();
+    var fin = new Date().getTime();
+
+    this.getDetailsView(inicio, fin, this.state.path);
+    this.getGeneralView(inicio, fin, this.state.path);
+    //this.getVisitsByDay(inicio, fin);
+  }
+
+  setInputDates(inicio, fin) {
+    var date = new Date(inicio);
+    var day = date.getDate();
+    var month = date.getMonth();
+    var year = date.getFullYear();
+    this.setState({
+      inicio:
+        year + "-" + ("0" + (month + 1)).slice(-2) + "-" + ("0" + day).slice(-2)
+    });
+
+    date = new Date(fin);
+    day = date.getDate();
+    month = date.getMonth();
+    year = date.getFullYear();
+    this.setState({
+      fin:
+        year + "-" + ("0" + (month + 1)).slice(-2) + "-" + ("0" + day).slice(-2)
+    });
+  }
+
   render() {
     return (
       <div className="detalles">
@@ -279,6 +313,27 @@ class Detalles extends Component {
           <button className="btn" onClick={this.filtrarPorFecha}>
             Filtrar por fecha
           </button>
+          <div className="pull-right fast-options">
+            <label>Últimos:</label>
+            <button
+              className="btn btn-link"
+              onClick={this.filtrarPorDias.bind(this, 7)}
+            >
+              7 días
+            </button>
+            <button
+              className="btn btn-link"
+              onClick={this.filtrarPorDias.bind(this, 15)}
+            >
+              15 días
+            </button>
+            <button
+              className="btn btn-link"
+              onClick={this.filtrarPorDias.bind(this, 30)}
+            >
+              30 días
+            </button>
+          </div>
         </div>
         {/*<LineChart
           width={800}
