@@ -53,6 +53,14 @@
     min-width:300px;
 }
 
+.react-tabs__tab-list{
+    margin-bottom: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-family: Montserrat;
+    color: #337ab7;
+}
+
 .datepicker-group{
     .datepicker{
         max-width: 200px;
@@ -96,6 +104,8 @@
     float: right;
     font-size: 13px;
     margin-top: 45px;
+    padding: 0 11px;
+    margin-right: 9px;
     label{
         font-weight: 100;
         padding-right: 6px;

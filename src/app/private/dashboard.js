@@ -3,6 +3,8 @@ import "../../scss/dashboard.scss";
 import DatatablePage from "../../base_components/DatatablePage";
 import AuthHelperMethods from "./authHelperMethods";
 import { Link } from "react-router-dom";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
 
 import {
   LineChart,
@@ -72,6 +74,10 @@ class Dashboard extends Component {
       ssoo: [],
       ubications: [],
       visits_by_day: [],
+      tiempo_medio_by_day: [],
+      tiempo_total_by_day: [],
+      media_acciones_by_day: [],
+      total_acciones_by_day: [],
       inicio: "",
       fin: ""
     };
@@ -82,8 +88,10 @@ class Dashboard extends Component {
   componentWillMount() {
     this.getVisitsByDay("", "");
     this.getGeneral("", "");
-    //this.getBrowsers();
-    //this.getSsoo();
+    this.getTiempoMedioByDay("", "");
+    this.getTiempoTotalByDay("", "");
+    this.getMediaAccionesByDay("", "");
+    this.getTotalAccionesByDay("", "");
   }
 
   getVisitsByDay(inicio, fin) {
@@ -116,6 +124,141 @@ class Dashboard extends Component {
       .then(response => response.json())
       .then(data => {
         this.setState({ visits_by_day: data });
+      })
+      .catch(error => console.log(error));
+  }
+
+  getTiempoMedioByDay(inicio, fin) {
+    if (isNaN(inicio) || isNaN(fin) || inicio === "" || fin === "") {
+      inicio = new Date();
+      inicio.setDate(inicio.getDate() - 7);
+      inicio = inicio.getTime();
+      fin = new Date().getTime();
+    }
+    this.setInputDates(inicio, fin);
+
+    //const url ="https://uxserverstattips.herokuapp.com/visitsByDay?url=" + Auth.getWebPage() + "&inicio=" + oldDate.getTime() +"&fin=" +new Date().getTime();
+
+    /*const url =
+      "http://localhost:3001/tiempoMedioByDay?url=" +
+      Auth.getWebPage() +
+      "&inicio=" +
+      inicio +
+      "&fin=" +
+      fin;*/
+
+    const url =
+      "https://uxserverstattips.herokuapp.com/tiempoMedioByDay?url=" +
+      Auth.getWebPage() +
+      "&inicio=" +
+      inicio +
+      "&fin=" +
+      fin;
+    return fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ tiempo_medio_by_day: data });
+      })
+      .catch(error => console.log(error));
+  }
+  getTiempoTotalByDay(inicio, fin) {
+    if (isNaN(inicio) || isNaN(fin) || inicio === "" || fin === "") {
+      inicio = new Date();
+      inicio.setDate(inicio.getDate() - 7);
+      inicio = inicio.getTime();
+      fin = new Date().getTime();
+    }
+    this.setInputDates(inicio, fin);
+
+    //const url ="https://uxserverstattips.herokuapp.com/visitsByDay?url=" + Auth.getWebPage() + "&inicio=" + oldDate.getTime() +"&fin=" +new Date().getTime();
+
+    /*const url =
+      "http://localhost:3001/tiempoTotalByDay?url=" +
+      Auth.getWebPage() +
+      "&inicio=" +
+      inicio +
+      "&fin=" +
+      fin;*/
+
+    const url =
+      "https://uxserverstattips.herokuapp.com/tiempoTotalByDay?url=" +
+      Auth.getWebPage() +
+      "&inicio=" +
+      inicio +
+      "&fin=" +
+      fin;
+    return fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ tiempo_total_by_day: data });
+      })
+      .catch(error => console.log(error));
+  }
+
+  getMediaAccionesByDay(inicio, fin) {
+    if (isNaN(inicio) || isNaN(fin) || inicio === "" || fin === "") {
+      inicio = new Date();
+      inicio.setDate(inicio.getDate() - 7);
+      inicio = inicio.getTime();
+      fin = new Date().getTime();
+    }
+    this.setInputDates(inicio, fin);
+
+    //const url ="https://uxserverstattips.herokuapp.com/visitsByDay?url=" + Auth.getWebPage() + "&inicio=" + oldDate.getTime() +"&fin=" +new Date().getTime();
+
+    /*const url =
+      "http://localhost:3001/mediaAccionesByDay?url=" +
+      Auth.getWebPage() +
+      "&inicio=" +
+      inicio +
+      "&fin=" +
+      fin;*/
+
+    const url =
+      "https://uxserverstattips.herokuapp.com/mediaAccionesByDay?url=" +
+      Auth.getWebPage() +
+      "&inicio=" +
+      inicio +
+      "&fin=" +
+      fin;
+    return fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ media_acciones_by_day: data });
+      })
+      .catch(error => console.log(error));
+  }
+
+  getTotalAccionesByDay(inicio, fin) {
+    if (isNaN(inicio) || isNaN(fin) || inicio === "" || fin === "") {
+      inicio = new Date();
+      inicio.setDate(inicio.getDate() - 7);
+      inicio = inicio.getTime();
+      fin = new Date().getTime();
+    }
+    this.setInputDates(inicio, fin);
+
+    //const url ="https://uxserverstattips.herokuapp.com/totalAccionesByDay?url=" + Auth.getWebPage() + "&inicio=" + oldDate.getTime() +"&fin=" +new Date().getTime();
+
+    /* const url =
+      "http://localhost:3001/totalAccionesByDay?url=" +
+      Auth.getWebPage() +
+      "&inicio=" +
+      inicio +
+      "&fin=" +
+      fin;*/
+
+    const url =
+      "https://uxserverstattips.herokuapp.com/totalAccionesByDay?url=" +
+      Auth.getWebPage() +
+      "&inicio=" +
+      inicio +
+      "&fin=" +
+      fin;
+    return fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ total_acciones_by_day: data });
       })
       .catch(error => console.log(error));
   }
@@ -184,6 +327,10 @@ class Dashboard extends Component {
     var fin = f.getTime();
     this.getGeneral(inicio, fin);
     this.getVisitsByDay(inicio, fin);
+    this.getTiempoMedioByDay(inicio, fin);
+    this.getTiempoTotalByDay(inicio, fin);
+    this.getMediaAccionesByDay(inicio, fin);
+    this.getTotalAccionesByDay(inicio, fin);
   }
 
   filtrarPorDias(dias) {
@@ -194,6 +341,10 @@ class Dashboard extends Component {
 
     this.getGeneral(inicio, fin);
     this.getVisitsByDay(inicio, fin);
+    this.getTiempoMedioByDay(inicio, fin);
+    this.getTiempoTotalByDay(inicio, fin);
+    this.getMediaAccionesByDay(inicio, fin);
+    this.getTotalAccionesByDay(inicio, fin);
   }
 
   setInputDates(inicio, fin) {
@@ -268,33 +419,178 @@ class Dashboard extends Component {
             </button>
           </div>
         </div>
-        <LineChart
-          width={800}
-          height={300}
-          data={this.state.visits_by_day}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="day" />
-          <YAxis
-            label={{ value: "Visitas", angle: -90, position: "insideLeft" }}
-            allowDecimals={false}
-          />
-          <Tooltip />
-          <Line
-            name="Visitas"
-            type="monotone"
-            dataKey="value"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-          />
-        </LineChart>
+        <div className="charts">
+          <Tabs>
+            <TabList>
+              <Tab>Visitas</Tab>
+              <Tab>Tiempo medio</Tab>
+              <Tab>Tiempo total</Tab>
+              <Tab>Media de acciones</Tab>
+              <Tab>Total de acciones</Tab>
+            </TabList>
 
+            <TabPanel>
+              <LineChart
+                width={800}
+                height={300}
+                data={this.state.visits_by_day}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="day" />
+                <YAxis
+                  label={{
+                    value: "Visitas",
+                    angle: -90,
+                    position: "insideLeft"
+                  }}
+                  allowDecimals={false}
+                />
+                <Tooltip />
+                <Line
+                  name="Visitas"
+                  type="monotone"
+                  dataKey="value"
+                  stroke="#8884d8"
+                  activeDot={{ r: 8 }}
+                />
+              </LineChart>
+            </TabPanel>
+            <TabPanel>
+              <LineChart
+                width={800}
+                height={300}
+                data={this.state.tiempo_medio_by_day}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="day" />
+                <YAxis
+                  label={{
+                    value: "Tiempo medio",
+                    angle: -90,
+                    position: "insideLeft"
+                  }}
+                  allowDecimals={false}
+                />
+                <Tooltip />
+                <Line
+                  name="Tiempo medio"
+                  type="monotone"
+                  dataKey="value"
+                  stroke="#8884d8"
+                  activeDot={{ r: 8 }}
+                />
+              </LineChart>
+            </TabPanel>
+            <TabPanel>
+              <LineChart
+                width={800}
+                height={300}
+                data={this.state.tiempo_total_by_day}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="day" />
+                <YAxis
+                  label={{
+                    value: "Tiempo total",
+                    angle: -90,
+                    position: "insideLeft"
+                  }}
+                  allowDecimals={false}
+                />
+                <Tooltip />
+                <Line
+                  name="Tiempo total"
+                  type="monotone"
+                  dataKey="value"
+                  stroke="#8884d8"
+                  activeDot={{ r: 8 }}
+                />
+              </LineChart>
+            </TabPanel>
+            <TabPanel>
+              <LineChart
+                width={800}
+                height={300}
+                data={this.state.media_acciones_by_day}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="day" />
+                <YAxis
+                  label={{
+                    value: "Media de acciones",
+                    angle: -90,
+                    position: "insideLeft"
+                  }}
+                  allowDecimals={false}
+                />
+                <Tooltip />
+                <Line
+                  name="Media de acciones"
+                  type="monotone"
+                  dataKey="value"
+                  stroke="#8884d8"
+                  activeDot={{ r: 8 }}
+                />
+              </LineChart>
+            </TabPanel>
+            <TabPanel>
+              <LineChart
+                width={800}
+                height={300}
+                data={this.state.total_acciones_by_day}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="day" />
+                <YAxis
+                  label={{
+                    value: "Total de acciones",
+                    angle: -90,
+                    position: "insideLeft"
+                  }}
+                  allowDecimals={false}
+                />
+                <Tooltip />
+                <Line
+                  name="Total de acciones"
+                  type="monotone"
+                  dataKey="value"
+                  stroke="#8884d8"
+                  activeDot={{ r: 8 }}
+                />
+              </LineChart>
+            </TabPanel>
+          </Tabs>
+        </div>
         <DatatablePage data={this.state.general} update={this.state.update} />
       </div>
     );
