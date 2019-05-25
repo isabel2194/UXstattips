@@ -15,6 +15,9 @@ import {
   Tooltip
 } from "recharts";
 
+//const server = "http://localhost:3001";
+const server = "https://uxserverstattips.herokuapp.com";
+
 const fields_general = {
   columns: [
     {
@@ -100,18 +103,9 @@ class Dashboard extends Component {
     }
     this.setInputDates(inicio, fin);
 
-    //const url ="https://uxserverstattips.herokuapp.com/visitsByDay?url=" + Auth.getWebPage() + "&inicio=" + oldDate.getTime() +"&fin=" +new Date().getTime();
-
-    /*const url =
-      "http://localhost:3001/visitsByDay?url=" +
-      Auth.getWebPage() +
-      "&inicio=" +
-      inicio +
-      "&fin=" +
-      fin;*/
-
     const url =
-      "https://uxserverstattips.herokuapp.com/visitsByDay?url=" +
+      server +
+      "/visitsByDay?url=" +
       Auth.getWebPage() +
       "&inicio=" +
       inicio +
@@ -134,18 +128,9 @@ class Dashboard extends Component {
     }
     this.setInputDates(inicio, fin);
 
-    //const url ="https://uxserverstattips.herokuapp.com/visitsByDay?url=" + Auth.getWebPage() + "&inicio=" + oldDate.getTime() +"&fin=" +new Date().getTime();
-
-    /*const url =
-      "http://localhost:3001/tiempoMedioByDay?url=" +
-      Auth.getWebPage() +
-      "&inicio=" +
-      inicio +
-      "&fin=" +
-      fin;*/
-
     const url =
-      "https://uxserverstattips.herokuapp.com/tiempoMedioByDay?url=" +
+      server +
+      "/tiempoMedioByDay?url=" +
       Auth.getWebPage() +
       "&inicio=" +
       inicio +
@@ -167,18 +152,9 @@ class Dashboard extends Component {
     }
     this.setInputDates(inicio, fin);
 
-    //const url ="https://uxserverstattips.herokuapp.com/visitsByDay?url=" + Auth.getWebPage() + "&inicio=" + oldDate.getTime() +"&fin=" +new Date().getTime();
-
-    /*const url =
-      "http://localhost:3001/tiempoTotalByDay?url=" +
-      Auth.getWebPage() +
-      "&inicio=" +
-      inicio +
-      "&fin=" +
-      fin;*/
-
     const url =
-      "https://uxserverstattips.herokuapp.com/tiempoTotalByDay?url=" +
+      server +
+      "/tiempoTotalByDay?url=" +
       Auth.getWebPage() +
       "&inicio=" +
       inicio +
@@ -201,18 +177,9 @@ class Dashboard extends Component {
     }
     this.setInputDates(inicio, fin);
 
-    //const url ="https://uxserverstattips.herokuapp.com/visitsByDay?url=" + Auth.getWebPage() + "&inicio=" + oldDate.getTime() +"&fin=" +new Date().getTime();
-
-    /*const url =
-      "http://localhost:3001/mediaAccionesByDay?url=" +
-      Auth.getWebPage() +
-      "&inicio=" +
-      inicio +
-      "&fin=" +
-      fin;*/
-
     const url =
-      "https://uxserverstattips.herokuapp.com/mediaAccionesByDay?url=" +
+      server +
+      "/mediaAccionesByDay?url=" +
       Auth.getWebPage() +
       "&inicio=" +
       inicio +
@@ -235,18 +202,9 @@ class Dashboard extends Component {
     }
     this.setInputDates(inicio, fin);
 
-    //const url ="https://uxserverstattips.herokuapp.com/totalAccionesByDay?url=" + Auth.getWebPage() + "&inicio=" + oldDate.getTime() +"&fin=" +new Date().getTime();
-
-    /* const url =
-      "http://localhost:3001/totalAccionesByDay?url=" +
-      Auth.getWebPage() +
-      "&inicio=" +
-      inicio +
-      "&fin=" +
-      fin;*/
-
     const url =
-      "https://uxserverstattips.herokuapp.com/totalAccionesByDay?url=" +
+      server +
+      "/totalAccionesByDay?url=" +
       Auth.getWebPage() +
       "&inicio=" +
       inicio +
@@ -268,23 +226,15 @@ class Dashboard extends Component {
       fin = new Date().getTime();
     }
 
-    //const url ="https://uxserverstattips.herokuapp.com/general?url=" + Auth.getWebPage() + "&inicio=" + oldDate.getTime() +"&fin=" +new Date().getTime();
-
-    /*const url =
-      "http://localhost:3001/general?url=" +
-      Auth.getWebPage() +
-      "&inicio=" +
-      inicio +
-      "&fin=" +
-      fin;*/
-
     const url =
-      "https://uxserverstattips.herokuapp.com/general?url=" +
+      server +
+      "/general?url=" +
       Auth.getWebPage() +
       "&inicio=" +
       inicio +
       "&fin=" +
       fin;
+
     this.setState({ general: {} });
     fields_general.rows = [];
     return fetch(url)

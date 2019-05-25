@@ -16,6 +16,9 @@ import {
 } from "recharts";
 import DatatablePage from "../../base_components/DatatablePage";
 
+//const server = "http://localhost:3001";
+const server = "https://uxserverstattips.herokuapp.com";
+
 const fields_general = {
   columns: [
     {
@@ -123,18 +126,9 @@ class Detalles extends Component {
     }
     this.setInputDates(inicio, fin);
 
-    /*const url =
-      "http://localhost:3001/visitsPathByDay?url=" +
-      Auth.getWebPage() +
-      "&path=" +
-      path +
-      "&inicio=" +
-      inicio +
-      "&fin=" +
-      fin;*/
-
     const url =
-      "https://uxserverstattips.herokuapp.com/visitsPathByDay?url=" +
+      server +
+      "/visitsPathByDay?url=" +
       Auth.getWebPage() +
       "&path=" +
       path +
@@ -159,18 +153,9 @@ class Detalles extends Component {
     }
     this.setInputDates(inicio, fin);
 
-    /*const url =
-      "http://localhost:3001/tiempoMedioPathByDay?url=" +
-      Auth.getWebPage() +
-      "&path=" +
-      path +
-      "&inicio=" +
-      inicio +
-      "&fin=" +
-      fin;*/
-
     const url =
-      "https://uxserverstattips.herokuapp.com/tiempoMedioPathByDay?url=" +
+      server +
+      "/tiempoMedioPathByDay?url=" +
       Auth.getWebPage() +
       "&path=" +
       path +
@@ -194,18 +179,9 @@ class Detalles extends Component {
     }
     this.setInputDates(inicio, fin);
 
-    /*const url =
-      "http://localhost:3001/tiempoTotalPathByDay?url=" +
-      Auth.getWebPage() +
-      "&path=" +
-      path +
-      "&inicio=" +
-      inicio +
-      "&fin=" +
-      fin;*/
-
     const url =
-      "https://uxserverstattips.herokuapp.com/tiempoTotalPathByDay?url=" +
+      server +
+      "/tiempoTotalPathByDay?url=" +
       Auth.getWebPage() +
       "&path=" +
       path +
@@ -230,18 +206,9 @@ class Detalles extends Component {
     }
     this.setInputDates(inicio, fin);
 
-    /*const url =
-      "http://localhost:3001/mediaAccionesPathByDay?url=" +
-      Auth.getWebPage() +
-      "&path=" +
-      path +
-      "&inicio=" +
-      inicio +
-      "&fin=" +
-      fin;*/
-
     const url =
-      "https://uxserverstattips.herokuapp.com/mediaAccionesPathByDay?url=" +
+      server +
+      "/mediaAccionesPathByDay?url=" +
       Auth.getWebPage() +
       "&path=" +
       path +
@@ -266,18 +233,9 @@ class Detalles extends Component {
     }
     this.setInputDates(inicio, fin);
 
-    /*const url =
-      "http://localhost:3001/totalAccionesPathByDay?url=" +
-      Auth.getWebPage() +
-      "&path=" +
-      path +
-      "&inicio=" +
-      inicio +
-      "&fin=" +
-      fin;*/
-
     const url =
-      "https://uxserverstattips.herokuapp.com/totalAccionesPathByDay?url=" +
+      server +
+      "/totalAccionesPathByDay?url=" +
       Auth.getWebPage() +
       "&path=" +
       path +
@@ -301,16 +259,9 @@ class Detalles extends Component {
       fin = new Date().getTime();
     }
 
-    /*const url =
-      "http://localhost:3001/visitsByDay?url=" +
-      Auth.getWebPage() +
-      "&inicio=" +
-      inicio +
-      "&fin=" +
-      fin;*/
-
     const url =
-      "https://uxserverstattips.herokuapp.com/generalViewData?url=" +
+      server +
+      "/generalViewData?url=" +
       Auth.getWebPage() +
       "&path=" +
       path +
@@ -334,18 +285,9 @@ class Detalles extends Component {
       fin = new Date().getTime();
     }
 
-    /*const url =
-      "http://localhost:3001/generalView?url=" +
-      Auth.getWebPage() +
-      "&path=" +
-      path +
-      "&inicio=" +
-      inicio +
-      "&fin=" +
-      fin;*/
-
     const url =
-      "https://uxserverstattips.herokuapp.com/generalView?url=" +
+      server +
+      "/generalView?url=" +
       Auth.getWebPage() +
       "&path=" +
       path +
@@ -383,18 +325,9 @@ class Detalles extends Component {
     }
     this.setInputDates(inicio, fin);
 
-    /*const url =
-      "http://localhost:3001/detailView?url=" +
-      Auth.getWebPage() +
-      "&path=" +
-      path +
-      "&inicio=" +
-      inicio +
-      "&fin=" +
-      fin;*/
-
     const url =
-      "https://uxserverstattips.herokuapp.com/detailView?url=" +
+      server +
+      "/detailView?url=" +
       Auth.getWebPage() +
       "&path=" +
       path +
