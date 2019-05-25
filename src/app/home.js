@@ -1,9 +1,26 @@
 import React, { Component } from "react";
-import "../scss/login.scss";
+import "../scss/home.scss";
 
 class Home extends Component {
   render() {
-    return <h2>Home</h2>;
+    return (
+      <div className="home">
+        <div className="box-blue">
+          <a
+            className="cdn-input"
+            href="https://unioviedo-my.sharepoint.com/:f:/g/personal/uo231413_uniovi_es/Eha6B-hDeBtPt-4JIWXRvEUBAxf8KCKbLxoRRdTf8i0rwA?e=OajOa8"
+          >
+            DESCÁRGATELA
+          </a>
+        </div>
+        <div>
+          <h2 className="titulo2">
+            Inserta la librería <b>UXjs</b> en tu web <br />y comienza a ver tus
+            estadísticas!
+          </h2>
+        </div>
+      </div>
+    );
   }
 }
 

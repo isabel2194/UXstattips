@@ -9,6 +9,7 @@ import withAuth from "./app/private/withAuth";
 import { withRouter, Redirect } from "react-router-dom";
 import MenuHeader from "./app/menuHeader";
 import Detalles from "./app/private/detalles";
+import Home from "./app/home";
 
 class App extends Component {
   render() {
@@ -18,8 +19,9 @@ class App extends Component {
           <MenuHeader />
           <Route exact path="/" render={() => <Redirect to="/index" />} />
           <Route exact path="/logout" render={() => <Redirect to="/index" />} />
-          <Route path="/index" component={Documentacion} />
-          <Route path="/js" component={Documentacion} />
+          <Route path="/index" component={Home} />
+          <Route path="/js" component={Home} />
+          <Route path="/documentacion" component={Documentacion} />
           <Route path="/registro" component={Registro} />
           <Route path="/login" component={Login} />
           <Route
