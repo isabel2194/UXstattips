@@ -70,9 +70,6 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       general: {},
-      browsers: [],
-      ssoo: [],
-      ubications: [],
       visits_by_day: [],
       tiempo_medio_by_day: [],
       tiempo_total_by_day: [],
