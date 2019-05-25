@@ -3,6 +3,9 @@ import "../../scss/detalles.scss";
 import NormalTable from "../../base_components/NormalTable";
 import AuthHelperMethods from "./authHelperMethods";
 import queryString from "query-string";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 
@@ -643,6 +646,10 @@ class Detalles extends Component {
           <h3 className="titulo3">Resumen de usuarios</h3>
           <DatatablePage data={this.state.details} update={this.state.update} />
         </div>
+        <Link className="return-btn" to={"/dashboard"}>
+          <FontAwesomeIcon icon="arrow-left" />
+          Volver al dashboard
+        </Link>
       </div>
     );
   }
