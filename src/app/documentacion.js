@@ -10,8 +10,11 @@ class Documentacion extends Component {
           <h2 className="titulo2">¿Como utilizar UXjs?</h2>
           <p>
             Lo primero que debemos hacer será decargarnos el fichero JavaScript
-            de la siguiente url: <a href="">UXjs</a>.<br />A continuación, nos
-            registraremos en esta web en el apartado{" "}
+            de la siguiente url:{" "}
+            <a href="https://unioviedo-my.sharepoint.com/:f:/g/personal/uo231413_uniovi_es/Eha6B-hDeBtPt-4JIWXRvEUBAxf8KCKbLxoRRdTf8i0rwA?e=OajOa8">
+              UXjs
+            </a>
+            .<br />A continuación, nos registraremos en esta web en el apartado{" "}
             <Link to="/registro">Registro</Link> e insertaremos la url de
             nuestra web si el protocolo, por ej. www.website.com , NO
             https://www.website.com . <br />{" "}

@@ -27,7 +27,10 @@ class Registro extends Component {
         surname: event.target.surname.value,
         email: event.target.email.value,
         password: event.target.passwd.value,
-        website: event.target.website.value
+        website: event.target.website.value,
+        peso_click: 0.2,
+        peso_mov: 0.05,
+        peso_push: 0.2
       }),
       dataType: "json",
       contentType: "application/json",
@@ -60,6 +63,7 @@ class Registro extends Component {
             type="text"
             required
             name="name"
+            placeholder="Nombre"
             value={this.state.name}
             onChange={this.handleChange}
           />
@@ -72,6 +76,7 @@ class Registro extends Component {
             type="text"
             required
             name="surname"
+            placeholder="Apellidos"
             value={this.state.surname}
             onChange={this.handleChange}
           />
@@ -84,6 +89,7 @@ class Registro extends Component {
             type="email"
             required
             name="email"
+            placeholder="Email"
             value={this.state.email}
             onChange={this.handleChange}
           />
@@ -96,6 +102,7 @@ class Registro extends Component {
             type="password"
             required
             name="passwd"
+            placeholder="Password"
             value={this.state.password}
             onChange={this.handleChange}
           />
@@ -108,6 +115,7 @@ class Registro extends Component {
             type="text"
             required
             name="website"
+            placeholder="www.mywebsite.com"
             value={this.state.website}
             onChange={this.handleChange}
           />
