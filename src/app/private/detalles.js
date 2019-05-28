@@ -19,8 +19,8 @@ import {
 } from "recharts";
 import DatatablePage from "../../base_components/DatatablePage";
 
-const server = "http://localhost:3001";
-//const server = "https://uxserverstattips.herokuapp.com";
+//const server = "http://localhost:3001";
+const server = "https://uxserverstattips.herokuapp.com";
 
 const fields_general = {
   columns: [
