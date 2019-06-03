@@ -18,9 +18,10 @@ import {
   Tooltip
 } from "recharts";
 import DatatablePage from "../../base_components/DatatablePage";
+import ToHHmmss from "../helpers/TimeHelper";
 
-//const server = "http://localhost:3001";
-const server = "https://uxserverstattips.herokuapp.com";
+const server = "http://localhost:3001";
+//const server = "https://uxserverstattips.herokuapp.com";
 
 const fields_general = {
   columns: [
@@ -31,7 +32,7 @@ const fields_general = {
       width: 150
     },
     {
-      label: "Tiempo medio de sesion (seg.)",
+      label: "Tiempo medio de sesion (HH:mm:ss)",
       field: "time_session",
       sort: "asc",
       width: 150
@@ -39,6 +40,24 @@ const fields_general = {
     {
       label: "Media de acciones realizadas",
       field: "average_actions",
+      sort: "asc",
+      width: 150
+    },
+    {
+      label: "Media de acciones tipo 1",
+      field: "average_actions_type_one",
+      sort: "asc",
+      width: 150
+    },
+    {
+      label: "Media de acciones tipo 2",
+      field: "average_actions_type_two",
+      sort: "asc",
+      width: 150
+    },
+    {
+      label: "Media de acciones tipo 3",
+      field: "average_actions_type_three",
       sort: "asc",
       width: 150
     }
@@ -97,7 +116,19 @@ const fields_details = {
       width: 150
     },
     {
-      label: "Tiempo (seg.)",
+      label: "Acciones de tipo 2",
+      field: "type_two_actions",
+      sort: "asc",
+      width: 150
+    },
+    {
+      label: "Acciones de tipo 3",
+      field: "type_three_actions",
+      sort: "asc",
+      width: 150
+    },
+    {
+      label: "Tiempo (HH:mm:ss)",
       field: "time",
       sort: "asc",
       width: 150
@@ -133,6 +164,9 @@ class Detalles extends Component {
       tiempo_medio_by_day: [],
       tiempo_total_by_day: [],
       media_acciones_by_day: [],
+      media_acciones_1_by_day: [],
+      media_acciones_2_by_day: [],
+      media_acciones_3_by_day: [],
       total_acciones_by_day: [],
       inicio: "",
       fin: "",
@@ -153,6 +187,9 @@ class Detalles extends Component {
     this.getTiempoMedioByDay("", "", this.state.path);
     this.getTiempoTotalByDay("", "", this.state.path);
     this.getMediaAccionesByDay("", "", this.state.path);
+    this.getMediaAccionesTipo1ByDay("", "", this.state.path);
+    this.getMediaAccionesTipo2ByDay("", "", this.state.path);
+    this.getMediaAccionesTipo3ByDay("", "", this.state.path);
     this.getTotalAccionesByDay("", "", this.state.path);
     this.getDetailActionsView("", "", this.state.path);
     this.getPesos();
@@ -264,6 +301,85 @@ class Detalles extends Component {
       .catch(error => console.log(error));
   }
 
+  getMediaAccionesTipo1ByDay(inicio, fin, path) {
+    if (isNaN(inicio) || isNaN(fin) || inicio === "" || fin === "") {
+      inicio = new Date();
+      inicio.setDate(inicio.getDate() - 7);
+      inicio = inicio.getTime();
+      fin = new Date().getTime();
+    }
+    this.setInputDates(inicio, fin);
+
+    const url =
+      server +
+      "/mediaAccionesTipo1ByDay?url=" +
+      Auth.getWebPage() +
+      "&path=" +
+      path +
+      "&inicio=" +
+      inicio +
+      "&fin=" +
+      fin;
+    return fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ media_acciones_1_by_day: data });
+      })
+      .catch(error => console.log(error));
+  }
+  getMediaAccionesTipo2ByDay(inicio, fin, path) {
+    if (isNaN(inicio) || isNaN(fin) || inicio === "" || fin === "") {
+      inicio = new Date();
+      inicio.setDate(inicio.getDate() - 7);
+      inicio = inicio.getTime();
+      fin = new Date().getTime();
+    }
+    this.setInputDates(inicio, fin);
+
+    const url =
+      server +
+      "/mediaAccionesTipo2ByDay?url=" +
+      Auth.getWebPage() +
+      "&path=" +
+      path +
+      "&inicio=" +
+      inicio +
+      "&fin=" +
+      fin;
+    return fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ media_acciones_2_by_day: data });
+      })
+      .catch(error => console.log(error));
+  }
+  getMediaAccionesTipo3ByDay(inicio, fin, path) {
+    if (isNaN(inicio) || isNaN(fin) || inicio === "" || fin === "") {
+      inicio = new Date();
+      inicio.setDate(inicio.getDate() - 7);
+      inicio = inicio.getTime();
+      fin = new Date().getTime();
+    }
+    this.setInputDates(inicio, fin);
+
+    const url =
+      server +
+      "/mediaAccionesTipo3ByDay?url=" +
+      Auth.getWebPage() +
+      "&path=" +
+      path +
+      "&inicio=" +
+      inicio +
+      "&fin=" +
+      fin;
+    return fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ media_acciones_3_by_day: data });
+      })
+      .catch(error => console.log(error));
+  }
+
   getTotalAccionesByDay(inicio, fin, path) {
     if (isNaN(inicio) || isNaN(fin) || inicio === "" || fin === "") {
       inicio = new Date();
@@ -343,8 +459,11 @@ class Detalles extends Component {
         for (let i = 0; i < general.length; i++) {
           fields_general.rows.push({
             total_users: general[i].total_users,
-            time_session: general[i].time_session,
-            average_actions: general[i].average_actions
+            time_session: ToHHmmss(general[i].time_session),
+            average_actions: general[i].average_actions,
+            average_actions_type_one: general[i].average_actions_type_one,
+            average_actions_type_two: general[i].average_actions_type_two,
+            average_actions_type_three: general[i].average_actions_type_three
           });
         }
         return fields_general;
@@ -385,7 +504,9 @@ class Detalles extends Component {
             user: details[i].user,
             total_actions: details[i].total_actions,
             type_one_actions: details[i].type_one_actions,
-            time: details[i].time,
+            type_two_actions: details[i].type_two_actions,
+            type_three_actions: details[i].type_three_actions,
+            time: ToHHmmss(details[i].time),
             browsers: details[i].browsers,
             ssoos: details[i].ssoos
           });
@@ -418,16 +539,24 @@ class Detalles extends Component {
       inicio +
       "&fin=" +
       fin;
-    this.setState({ details: {} });
+    this.setState({ details_actions: {} });
     fields_details_action.rows = [];
     return fetch(url)
       .then(response => response.json())
       .then(details => {
         for (let i = 0; i < details.length; i++) {
+          var tipo = "";
+          if (details[i].type === 1) {
+            tipo = "Click (1)";
+          } else if (details[i].type === 2) {
+            tipo = "Pulsacion (2)";
+          } else if (details[i].type === 3) {
+            tipo = "Movimiento (3)";
+          }
           fields_details_action.rows.push({
             action_id: details[i].action_id,
-            type: details[i].type,
-            users_percent: details[i].users_percent,
+            type: tipo,
+            users_percent: details[i].users_percent + "%",
             media_in_sesion: details[i].media_in_sesion
           });
         }
@@ -502,6 +631,9 @@ class Detalles extends Component {
     this.getTiempoMedioByDay(inicio, fin, this.state.path);
     this.getTiempoTotalByDay(inicio, fin, this.state.path);
     this.getMediaAccionesByDay(inicio, fin, this.state.path);
+    this.getMediaAccionesTipo1ByDay(inicio, fin, this.state.path);
+    this.getMediaAccionesTipo2ByDay(inicio, fin, this.state.path);
+    this.getMediaAccionesTipo3ByDay(inicio, fin, this.state.path);
     this.getTotalAccionesByDay(inicio, fin, this.state.path);
     this.getDetailActionsView(inicio, fin, this.state.path);
   }
@@ -585,6 +717,9 @@ class Detalles extends Component {
               <Tab>Tiempo medio</Tab>
               <Tab>Tiempo total</Tab>
               <Tab>Media de acciones</Tab>
+              <Tab>Media de acciones tipo 1</Tab>
+              <Tab>Media de acciones tipo 2</Tab>
+              <Tab>Media de acciones tipo 3</Tab>
               <Tab>Total de acciones</Tab>
             </TabList>
 
@@ -720,6 +855,102 @@ class Detalles extends Component {
               <LineChart
                 width={800}
                 height={300}
+                data={this.state.media_acciones_1_by_day}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="day" />
+                <YAxis
+                  label={{
+                    value: "Media de acciones de tipo 1",
+                    angle: -90,
+                    position: "insideLeft"
+                  }}
+                  allowDecimals={false}
+                />
+                <Tooltip />
+                <Line
+                  name="Media de acciones de tipo 1"
+                  type="monotone"
+                  dataKey="value"
+                  stroke="#8884d8"
+                  activeDot={{ r: 8 }}
+                />
+              </LineChart>
+            </TabPanel>
+            <TabPanel>
+              <LineChart
+                width={800}
+                height={300}
+                data={this.state.media_acciones_2_by_day}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="day" />
+                <YAxis
+                  label={{
+                    value: "Media de acciones de tipo 2",
+                    angle: -90,
+                    position: "insideLeft"
+                  }}
+                  allowDecimals={false}
+                />
+                <Tooltip />
+                <Line
+                  name="Media de acciones de tipo 2"
+                  type="monotone"
+                  dataKey="value"
+                  stroke="#8884d8"
+                  activeDot={{ r: 8 }}
+                />
+              </LineChart>
+            </TabPanel>
+            <TabPanel>
+              <LineChart
+                width={800}
+                height={300}
+                data={this.state.media_acciones_3_by_day}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="day" />
+                <YAxis
+                  label={{
+                    value: "Media de accione de tipo 3",
+                    angle: -90,
+                    position: "insideLeft"
+                  }}
+                  allowDecimals={false}
+                />
+                <Tooltip />
+                <Line
+                  name="Media de acciones de tipo 3"
+                  type="monotone"
+                  dataKey="value"
+                  stroke="#8884d8"
+                  activeDot={{ r: 8 }}
+                />
+              </LineChart>
+            </TabPanel>
+            <TabPanel>
+              <LineChart
+                width={800}
+                height={300}
                 data={this.state.total_acciones_by_day}
                 margin={{
                   top: 5,
@@ -762,7 +993,7 @@ class Detalles extends Component {
             update={this.state.update}
           />
           <div className="pesoAcciones">
-            <h4>Cambia el peso de las acciones</h4>
+            <h4>Cambia el peso de las acciones:</h4>
             <form onSubmit={this.cambiarPeso}>
               <div className="form-group">
                 <label htmlFor="pesoClick">Peso de click:</label>

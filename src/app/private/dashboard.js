@@ -5,6 +5,7 @@ import AuthHelperMethods from "./authHelperMethods";
 import { Link } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import ToHHmmss from "../helpers/TimeHelper";
 
 import {
   LineChart,
@@ -15,8 +16,8 @@ import {
   Tooltip
 } from "recharts";
 
-//const server = "http://localhost:3001";
-const server = "https://uxserverstattips.herokuapp.com";
+const server = "http://localhost:3001";
+//const server = "https://uxserverstattips.herokuapp.com";
 
 const fields_general = {
   columns: [
@@ -33,13 +34,13 @@ const fields_general = {
       width: 150
     },
     {
-      label: "Tiempo medio (seg.)",
+      label: "Tiempo medio (HH:mm:ss)",
       field: "tiempo_medio",
       sort: "asc",
       width: 150
     },
     {
-      label: "Tiempo total (seg.)",
+      label: "Tiempo total (HH:mm:ss)",
       field: "tiempo_total",
       sort: "asc",
       width: 150
@@ -244,8 +245,8 @@ class Dashboard extends Component {
           fields_general.rows.push({
             path: general[i].path,
             total_visitas: general[i].total_visitas,
-            tiempo_medio: general[i].tiempo_medio,
-            tiempo_total: general[i].tiempo_total,
+            tiempo_medio: ToHHmmss(general[i].tiempo_medio),
+            tiempo_total: ToHHmmss(general[i].tiempo_total),
             acciones_medias: general[i].acciones_medias,
             acciones_totales: general[i].acciones_totales,
             details_button: (
