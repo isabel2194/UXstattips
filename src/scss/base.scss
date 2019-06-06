@@ -68,7 +68,9 @@
 
     margin:40px;
     .pagination,.dataTables_filter{
-        float: right;
+        @media(min-width:735px){
+            float: right;
+        }
     }
     table{
         margin: 20px 0;

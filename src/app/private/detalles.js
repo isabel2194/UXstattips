@@ -104,7 +104,7 @@ const fields_details = {
       width: 150
     },
     {
-      label: "Acciones totales",
+      label: "Acciones totales (SUM[peso*numero_accion])",
       field: "total_actions",
       sort: "asc",
       width: 150
@@ -971,7 +971,7 @@ class Detalles extends Component {
                 />
                 <Tooltip />
                 <Line
-                  name="Total de acciones"
+                  name="Total de acciones SUM(peso*num_acciones)"
                   type="monotone"
                   dataKey="value"
                   stroke="#8884d8"

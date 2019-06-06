@@ -80,7 +80,11 @@ class Dashboard extends Component {
       media_acciones_by_day: [],
       total_acciones_by_day: [],
       inicio: "",
-      fin: ""
+      fin: "",
+      m_tiempo_medio: 0,
+      m_tiempo_total: 0,
+      m_acciones_medias: 0,
+      m_acciones_totales: 0
     };
     this.handleChange = this.handleChange.bind(this);
     this.filtrarPorFecha = this.filtrarPorFecha.bind(this);
@@ -241,7 +245,16 @@ class Dashboard extends Component {
     return fetch(url)
       .then(response => response.json())
       .then(general => {
+        var m_tiempo_medio = 0;
+        var m_tiempo_total = 0;
+        var m_acciones_medias = 0;
+        var m_acciones_totales = 0;
+
         for (let i = 0; i < general.length; i++) {
+          m_tiempo_medio = m_tiempo_medio + general[i].tiempo_medio;
+          m_tiempo_total = m_tiempo_total + general[i].tiempo_total;
+          m_acciones_medias = m_acciones_medias + general[i].acciones_medias;
+          m_acciones_totales = m_acciones_totales + general[i].acciones_totales;
           fields_general.rows.push({
             path: general[i].path,
             total_visitas: general[i].total_visitas,
@@ -254,6 +267,13 @@ class Dashboard extends Component {
             )
           });
         }
+
+        this.setState({
+          m_tiempo_medio: m_tiempo_medio / general.length,
+          m_tiempo_total: m_tiempo_total / general.length,
+          m_acciones_medias: m_acciones_medias / general.length,
+          m_acciones_totales: m_acciones_totales / general.length
+        });
         return fields_general;
       })
       .then(data => {
