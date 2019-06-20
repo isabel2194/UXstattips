@@ -66,7 +66,7 @@ class Ajustes extends Component {
           <br />
         </h3>
         <h4>Tu token es: {Auth.getClientToken()}</h4>
-        <div className="pesoAcciones box-blue">
+        <div className="pesoAcciones box-gray">
           <h4>Cambia el peso de las acciones:</h4>
           <form onSubmit={this.cambiarPeso}>
             <div className="form-group">
