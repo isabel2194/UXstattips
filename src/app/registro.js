@@ -43,7 +43,7 @@ class Registro extends Component {
       contentType: "application/json",
       success: function(data) {
         alert("Usuario registrado");
-        this.props.history.replace("/login");
+        window.location = "/login";
       }
     });
   }
