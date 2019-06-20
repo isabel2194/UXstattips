@@ -992,47 +992,6 @@ class Detalles extends Component {
             data={this.state.details_actions}
             update={this.state.update}
           />
-          <div className="pesoAcciones">
-            <h4>Cambia el peso de las acciones:</h4>
-            <form onSubmit={this.cambiarPeso}>
-              <div className="form-group">
-                <label htmlFor="pesoClick">Peso de click:</label>
-                <input
-                  id="pesoClick"
-                  name="peso_click"
-                  type="number"
-                  className="form-control"
-                  value={this.state.peso_click}
-                  onChange={this.handleChange}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="pesoMov">Peso de movimiento de 1px:</label>
-                <input
-                  id="pesoMov"
-                  name="peso_mov"
-                  className="form-control"
-                  type="number"
-                  value={this.state.peso_mov}
-                  onChange={this.handleChange}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="pesoPush">Peso de pulsación de tecla:</label>
-                <input
-                  id="pesoPush"
-                  name="peso_push"
-                  type="number"
-                  className="form-control"
-                  value={this.state.peso_push}
-                  onChange={this.handleChange}
-                />
-              </div>
-              <button type="submit" className="btn">
-                Cambiar
-              </button>
-            </form>
-          </div>
         </div>
         <Link className="return-btn" to={"/dashboard"}>
           <FontAwesomeIcon icon="arrow-left" />
