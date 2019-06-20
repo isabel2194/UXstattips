@@ -18,6 +18,7 @@ export default class AuthHelperMethods {
     }).then(res => {
       this.setToken(res.token); // Setting the token in localStorage
       this.setUserEmail(email);
+      this.setClientToken(res.clientToken);
       this.setWebPage(res.website);
       return Promise.resolve(res);
     });
@@ -58,6 +59,14 @@ export default class AuthHelperMethods {
 
   getUserEmail = () => {
     return localStorage.getItem("user_email");
+  };
+
+  setClientToken = clientToken => {
+    localStorage.setItem("client_token", clientToken);
+  };
+
+  getClientToken = () => {
+    return localStorage.getItem("client_token");
   };
 
   setWebPage = email => {

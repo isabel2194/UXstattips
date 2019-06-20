@@ -30,7 +30,14 @@ class Registro extends Component {
         website: event.target.website.value,
         peso_click: 0.2,
         peso_mov: 0.05,
-        peso_push: 0.2
+        peso_push: 0.2,
+        token:
+          Math.random()
+            .toString(36)
+            .substring(2, 15) +
+          Math.random()
+            .toString(36)
+            .substring(2, 15)
       }),
       dataType: "json",
       contentType: "application/json",
