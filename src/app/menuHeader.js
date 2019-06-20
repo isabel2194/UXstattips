@@ -44,9 +44,7 @@ class MenuHeader extends Component {
             {this.Auth.loggedIn() && <li>Hola, {this.Auth.getUserEmail()}</li>}
             {this.Auth.loggedIn() && (
               <li>
-                <a onClick={this._handleLogout} href="/ajustes">
-                  Ajustes
-                </a>
+                <a href="/ajustes">Ajustes</a>
               </li>
             )}
             {this.Auth.loggedIn() && (

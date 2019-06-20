@@ -23,7 +23,7 @@ class App extends Component {
           <Route path="/index" component={Home} />
           <Route path="/js" component={Home} />
           <Route path="/documentacion" component={Documentacion} />
-          <Route path="/ajustes" component={Ajustes} />
+          <Route path="/ajustes" component={withRouter(withAuth(Ajustes))} />
           <Route path="/registro" component={Registro} />
           <Route path="/login" component={Login} />
           <Route

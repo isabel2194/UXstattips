@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import ToHHmmss from "../helpers/TimeHelper";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
   LineChart,
@@ -340,7 +339,6 @@ class Dashboard extends Component {
     return (
       <div className="dashboard">
         <h2 className="titulo2">Dashboard</h2>
-        <FontAwesomeIcon icon="cogs" />
         <div className="datepicker-group">
           <div className="form-group datepicker">
             <label htmlFor="inicio">Desde:</label>
