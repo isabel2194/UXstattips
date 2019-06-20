@@ -339,7 +339,7 @@ class Dashboard extends Component {
     return (
       <div className="dashboard">
         <h2 className="titulo2">Dashboard</h2>
-        <h4>Tu token es: {this.Auth.getClientToken()}</h4>
+        <h4>Tu token es: {Auth.getClientToken()}</h4>
         <div className="datepicker-group">
           <div className="form-group datepicker">
             <label htmlFor="inicio">Desde:</label>
