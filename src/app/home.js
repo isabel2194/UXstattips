@@ -8,7 +8,7 @@ class Home extends Component {
         <div className="box-blue">
           <a
             className="cdn-input"
-            href="https://unioviedo-my.sharepoint.com/:f:/g/personal/uo231413_uniovi_es/Eha6B-hDeBtPt-4JIWXRvEUBAxf8KCKbLxoRRdTf8i0rwA?e=OajOa8"
+            href="https://unioviedo-my.sharepoint.com/:u:/g/personal/uo231413_uniovi_es/EYcx-FF8sP5KssBZIpJh5_EBk6TOzNwZEqH166f-HiRBgA?e=kcEsqv"
           >
             DESCÁRGATELA
           </a>

@@ -20,8 +20,16 @@ class Documentacion extends Component {
             https://www.website.com . <br />{" "}
           </p>
           <p>
-            Después de esto simplemente nos loguearemos y podremos ver
-            diferentes datos que nuestra herramienta recolecta:
+            A continuación debes <Link to="/login">iniciar sesión</Link> y
+            entrar en la opción de menú <Link to="/ajustes">Ajustes</Link>,
+            copiar el token y pegarlo en la primera línea del fichero JS después
+            del '='.
+          </p>
+          <p>Ejemplo: var uxstattips_token = "AQUI_VA_EL_TOKEN";</p>
+          <p>
+            Una vez hecho esto la librería UXjs va a empezar a recopilar
+            información de los usuario y podrá ver diferentes datos que nuestra
+            herramienta recolecta:
           </p>
           <ul>
             <li>
