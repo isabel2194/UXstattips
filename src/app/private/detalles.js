@@ -26,7 +26,7 @@ const server = "https://uxserverstattips.herokuapp.com";
 const fields_general = {
   columns: [
     {
-      label: "Usuarios totales",
+      label: "Total de visitas",
       field: "total_users",
       sort: "asc",
       width: 150
@@ -44,19 +44,19 @@ const fields_general = {
       width: 150
     },
     {
-      label: "Media de acciones tipo 1",
+      label: "Media de clicks",
       field: "average_actions_type_one",
       sort: "asc",
       width: 150
     },
     {
-      label: "Media de acciones tipo 2",
+      label: "Media de pulsaciones de teclado",
       field: "average_actions_type_two",
       sort: "asc",
       width: 150
     },
     {
-      label: "Media de acciones tipo 3",
+      label: "Media de movimientos de ratón",
       field: "average_actions_type_three",
       sort: "asc",
       width: 150
@@ -80,7 +80,7 @@ const fields_details_action = {
       width: 150
     },
     {
-      label: "Usuarios que lo han pulsado",
+      label: "Usuarios que realizaron la acción",
       field: "users_percent",
       sort: "asc",
       width: 150
@@ -104,25 +104,25 @@ const fields_details = {
       width: 150
     },
     {
-      label: "Acciones totales (SUM[peso*numero_accion])",
+      label: "Indicador UXSTATTIPS*",
       field: "total_actions",
       sort: "asc",
       width: 150
     },
     {
-      label: "Acciones de tipo 1",
+      label: "Click (1)",
       field: "type_one_actions",
       sort: "asc",
       width: 150
     },
     {
-      label: "Acciones de tipo 2",
+      label: "Pulsación de teclado (2)",
       field: "type_two_actions",
       sort: "asc",
       width: 150
     },
     {
-      label: "Acciones de tipo 3",
+      label: "Movimiento de ratón (3)",
       field: "type_three_actions",
       sort: "asc",
       width: 150
@@ -717,9 +717,9 @@ class Detalles extends Component {
               <Tab>Tiempo medio</Tab>
               <Tab>Tiempo total</Tab>
               <Tab>Media de acciones</Tab>
-              <Tab>Media de acciones tipo 1</Tab>
-              <Tab>Media de acciones tipo 2</Tab>
-              <Tab>Media de acciones tipo 3</Tab>
+              <Tab>Media de clicks</Tab>
+              <Tab>Media de pulsaciones de teclado</Tab>
+              <Tab>Media de movimientos de ratón</Tab>
               <Tab>Total de acciones</Tab>
             </TabList>
 
@@ -867,7 +867,7 @@ class Detalles extends Component {
                 <XAxis dataKey="day" />
                 <YAxis
                   label={{
-                    value: "Media de acciones de tipo 1",
+                    value: "Media de clicks",
                     angle: -90,
                     position: "insideLeft"
                   }}
@@ -875,7 +875,7 @@ class Detalles extends Component {
                 />
                 <Tooltip />
                 <Line
-                  name="Media de acciones de tipo 1"
+                  name="Media de clicks"
                   type="monotone"
                   dataKey="value"
                   stroke="#8884d8"
@@ -899,7 +899,7 @@ class Detalles extends Component {
                 <XAxis dataKey="day" />
                 <YAxis
                   label={{
-                    value: "Media de acciones de tipo 2",
+                    value: "Media de pulsaciones de teclado",
                     angle: -90,
                     position: "insideLeft"
                   }}
@@ -907,7 +907,7 @@ class Detalles extends Component {
                 />
                 <Tooltip />
                 <Line
-                  name="Media de acciones de tipo 2"
+                  name="Media de pulsaciones de teclado"
                   type="monotone"
                   dataKey="value"
                   stroke="#8884d8"
@@ -931,7 +931,7 @@ class Detalles extends Component {
                 <XAxis dataKey="day" />
                 <YAxis
                   label={{
-                    value: "Media de accione de tipo 3",
+                    value: "Media de movimientos de ratón",
                     angle: -90,
                     position: "insideLeft"
                   }}
@@ -939,7 +939,7 @@ class Detalles extends Component {
                 />
                 <Tooltip />
                 <Line
-                  name="Media de acciones de tipo 3"
+                  name="Media de movimientos de ratón"
                   type="monotone"
                   dataKey="value"
                   stroke="#8884d8"
@@ -985,6 +985,12 @@ class Detalles extends Component {
         <div className="box-gray">
           <h3 className="titulo3">Resumen de usuarios</h3>
           <DatatablePage data={this.state.details} update={this.state.update} />
+          <p className="little-text">
+            * El indicador UXSTATTIPS equivale a la suma de todos los pesos de
+            cada acción por el número de veces realizada:
+            (SUM[peso*numero_accion]). Si desea cambiar los pesos para cada
+            acción puede hacerlo a través de <Link to="/ajustes">Ajustes</Link>.
+          </p>
         </div>
         <div className="box-gray">
           <h3 className="titulo3">Resumen de acciones</h3>
