@@ -506,7 +506,7 @@ class Detalles extends Component {
             type_one_actions: details[i].type_one_actions,
             type_two_actions: details[i].type_two_actions,
             type_three_actions: details[i].type_three_actions,
-            time: ToHHmmss(details[i].time / 1000),
+            time: ToHHmmss(Math.floor(details[i].time / 1000)),
             browsers: details[i].browsers,
             ssoos: details[i].ssoos
           });
