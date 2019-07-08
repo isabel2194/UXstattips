@@ -293,12 +293,17 @@ class Dashboard extends Component {
     var f = new Date(this.state.fin);
     f.setHours(23, 59, 59);
     var fin = f.getTime();
-    this.getGeneral(inicio, fin);
-    this.getVisitsByDay(inicio, fin);
-    this.getTiempoMedioByDay(inicio, fin);
-    this.getTiempoTotalByDay(inicio, fin);
-    this.getMediaAccionesByDay(inicio, fin);
-    this.getTotalAccionesByDay(inicio, fin);
+    if (fin < inicio) {
+      document.getElementById("error-date").style.display = "inline-block";
+    } else {
+      document.getElementById("error-date").style.display = "none";
+      this.getGeneral(inicio, fin);
+      this.getVisitsByDay(inicio, fin);
+      this.getTiempoMedioByDay(inicio, fin);
+      this.getTiempoTotalByDay(inicio, fin);
+      this.getMediaAccionesByDay(inicio, fin);
+      this.getTotalAccionesByDay(inicio, fin);
+    }
   }
 
   filtrarPorDias(dias) {
@@ -306,7 +311,7 @@ class Dashboard extends Component {
     inicio.setDate(inicio.getDate() - dias);
     inicio = inicio.getTime();
     var fin = new Date().getTime();
-
+    document.getElementById("error-date").style.display = "none";
     this.getGeneral(inicio, fin);
     this.getVisitsByDay(inicio, fin);
     this.getTiempoMedioByDay(inicio, fin);
@@ -365,6 +370,7 @@ class Dashboard extends Component {
           <button className="btn" onClick={this.filtrarPorFecha}>
             Filtrar por fecha
           </button>
+          <p id="error-date">Las fechas no son válidas.</p>
           <div className="pull-right fast-options">
             <label>Últimos:</label>
             <button

@@ -502,7 +502,9 @@ class Detalles extends Component {
         for (let i = 0; i < details.length; i++) {
           fields_details.rows.push({
             user: details[i].user,
-            total_actions: details[i].total_actions,
+            total_actions: (
+              <Link to="/ajustes">{details[i].total_actions}</Link>
+            ),
             type_one_actions: details[i].type_one_actions,
             type_two_actions: details[i].type_two_actions,
             type_three_actions: details[i].type_three_actions,
@@ -609,14 +611,21 @@ class Detalles extends Component {
     var f = new Date(this.state.fin);
     f.setHours(23, 59, 59);
     var fin = f.getTime();
-    this.getDetailsView(inicio, fin, this.state.path);
-    this.getGeneralView(inicio, fin, this.state.path);
-    this.getVisitsByDay(inicio, fin, this.state.path);
-    this.getTiempoMedioByDay(inicio, fin, this.state.path);
-    this.getTiempoTotalByDay(inicio, fin, this.state.path);
-    this.getMediaAccionesByDay(inicio, fin, this.state.path);
-    this.getTotalAccionesByDay(inicio, fin, this.state.path);
-    this.getDetailActionsView(inicio, fin, this.state.path);
+
+    if (fin < inicio) {
+      document.getElementById("error-date").style.display = "inline-block";
+    } else {
+      document.getElementById("error-date").style.display = "none";
+
+      this.getDetailsView(inicio, fin, this.state.path);
+      this.getGeneralView(inicio, fin, this.state.path);
+      this.getVisitsByDay(inicio, fin, this.state.path);
+      this.getTiempoMedioByDay(inicio, fin, this.state.path);
+      this.getTiempoTotalByDay(inicio, fin, this.state.path);
+      this.getMediaAccionesByDay(inicio, fin, this.state.path);
+      this.getTotalAccionesByDay(inicio, fin, this.state.path);
+      this.getDetailActionsView(inicio, fin, this.state.path);
+    }
   }
 
   filtrarPorDias(dias) {
@@ -624,7 +633,7 @@ class Detalles extends Component {
     inicio.setDate(inicio.getDate() - dias);
     inicio = inicio.getTime();
     var fin = new Date().getTime();
-
+    document.getElementById("error-date").style.display = "none";
     this.getDetailsView(inicio, fin, this.state.path);
     this.getGeneralView(inicio, fin, this.state.path);
     this.getVisitsByDay(inicio, fin, this.state.path);
@@ -688,6 +697,7 @@ class Detalles extends Component {
           <button className="btn" onClick={this.filtrarPorFecha}>
             Filtrar por fecha
           </button>
+          <p id="error-date">Las fechas no son válidas.</p>
           <div className="pull-right fast-options">
             <label>Últimos:</label>
             <button
@@ -717,9 +727,9 @@ class Detalles extends Component {
               <Tab>Tiempo medio</Tab>
               <Tab>Tiempo total</Tab>
               <Tab>Media de acciones</Tab>
-              <Tab>Media de clicks</Tab>
-              <Tab>Media de pulsaciones de teclado</Tab>
-              <Tab>Media de movimientos de ratón</Tab>
+              <Tab>Media de clicks (1)</Tab>
+              <Tab>Media de pulsaciones de teclado (2)</Tab>
+              <Tab>Media de movimientos de ratón (3)</Tab>
               <Tab>Total de acciones</Tab>
             </TabList>
 
